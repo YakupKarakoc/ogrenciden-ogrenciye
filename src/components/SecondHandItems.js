@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Input, Button, message } from "antd";
-import { HeartOutlined, PlusCircleOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import {
+  HeartOutlined,
+  HeartFilled,
+  PlusCircleOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/SecondHandItems.css";
@@ -9,9 +15,26 @@ function SecondHandItems() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const [hoveredCategory, setHoveredCategory] = useState(null); // Sidebar için gerekli state
+  const [hoveredCategory, setHoveredCategory] = useState(null); // Bu state tanımlandı
 
+  // Fetch products and favorites on component mount
   useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        const userEmail = localStorage.getItem("userEmail");
+        if (!userEmail) {
+          throw new Error("Kullanıcı e-posta adresi bulunamadı.");
+        }
+
+        const response = await axios.get("http://localhost:5181/api/Favorites", {
+          params: { userEmail },
+        });
+        setFavorites(response.data.map((fav) => fav.itemId)); // Favori ürün ID'lerini al
+      } catch (error) {
+        message.error("Favoriler alınırken bir hata oluştu!");
+      }
+    };
+
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:5181/api/Products");
@@ -21,15 +44,40 @@ function SecondHandItems() {
       }
     };
 
+    fetchFavorites();
     fetchProducts();
   }, []);
 
-  const toggleFavorite = (productId) => {
-    setFavorites((prev) =>
-      prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
-    );
+  const toggleFavorite = async (productId) => {
+    const userEmail = localStorage.getItem("userEmail");
+    if (!userEmail) {
+      message.error("Kullanıcı e-posta adresi bulunamadı.");
+      return;
+    }
+  
+    try {
+      if (favorites.includes(productId)) {
+        // Favoriden çıkarma
+        await axios.delete(`http://localhost:5181/api/Favorites/${userEmail}/${productId}`);
+        setFavorites((prev) => prev.filter((id) => id !== productId));
+        message.success("Favorilerden kaldırıldı!");
+      } else {
+        // Favoriye ekleme
+        await axios.post("http://localhost:5181/api/Favorites", {
+          userEmail,
+          itemId: productId,
+          itemType: "Product",
+        });
+        setFavorites((prev) => [...prev, productId]);
+        message.success("Favorilere eklendi!");
+      }
+    } catch (error) {
+      message.error("Favori işlemi sırasında bir hata oluştu!");
+    }
   };
+  
 
+  // Navigation functions
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
@@ -39,12 +87,8 @@ function SecondHandItems() {
     navigate("/profile");
   };
 
-  const handleMessages = () => {
-    navigate("/messages");
-  };
-
-  const handleMyAds = () => {
-    navigate("/my-ads");
+  const handleFavoritesPage = () => {
+    navigate("/favorites");
   };
 
   const categories = [
@@ -97,23 +141,10 @@ function SecondHandItems() {
           <Button type="text" icon={<PlusCircleOutlined />} onClick={() => navigate("/new-ad")}>
             İlan Ver
           </Button>
-          <div
-            className="account-dropdown-container"
-            onMouseEnter={() => setHoveredCategory("account")}
-            onMouseLeave={() => setHoveredCategory(null)}
-          >
-            <Button type="text" icon={<UserOutlined />}>
-              Hesabım
-            </Button>
-            {hoveredCategory === "account" && (
-              <div className="account-dropdown">
-                <div onClick={handleProfile}>Kullanıcı Bilgilerim</div>
-                <div onClick={handleMessages}>Mesajlar</div>
-                <div onClick={handleMyAds}>İlanlarım</div>
-              </div>
-            )}
-          </div>
-          <Button type="text" icon={<HeartOutlined />}>
+          <Button type="text" icon={<UserOutlined />} onClick={handleProfile}>
+            Hesabım
+          </Button>
+          <Button type="text" icon={<HeartOutlined />} onClick={handleFavoritesPage}>
             Favorilerim
           </Button>
           <Button type="text" icon={<LogoutOutlined />} onClick={handleLogout}>
@@ -153,13 +184,17 @@ function SecondHandItems() {
         ) : (
           products.map((product) => (
             <div key={product.productId} className="ad-card">
-              <HeartOutlined
-                className="favorite-icon"
-                onClick={() => toggleFavorite(product.productId)}
-                style={{
-                  color: favorites.includes(product.productId) ? "#f44336" : "#ccc",
-                }}
-              />
+              {favorites.includes(product.productId) ? (
+                <HeartFilled
+                  className="favorite-icon active"
+                  onClick={() => toggleFavorite(product.productId)}
+                />
+              ) : (
+                <HeartOutlined
+                  className="favorite-icon"
+                  onClick={() => toggleFavorite(product.productId)}
+                />
+              )}
               <div className="ad-image-container">
                 <img
                   alt={product.title}
