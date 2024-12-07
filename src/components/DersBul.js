@@ -17,6 +17,7 @@ const DersBul = () => {
   const [role, setRole] = useState('');
   const [sessionType, setSessionType] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [name, setName] = useState('');
   const [selectedDate, setSelectedDate] = useState(null);
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -56,10 +57,15 @@ const DersBul = () => {
     setPhoneNumber(e.target.value);
   };
 
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
   const handleSubmit = () => {
     const selectedDateStr = selectedDate ? selectedDate.toLocaleDateString() : 'Belirtilmedi';
 
     const newStatus = `Seans Bilgisi:
+      İsim: ${name}
       Sınıf: ${selectedClass}
       Ders: ${selectedSubject}
       Rol: ${role}
@@ -103,6 +109,17 @@ const DersBul = () => {
             id="phone"
             value={phoneNumber}
             onChange={handlePhoneNumberChange}
+          />
+        </div>
+
+        {/* Name input */}
+        <div>
+          <label htmlFor="name">İsim ve Soyisim:</label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={handleNameChange}
           />
         </div>
 
