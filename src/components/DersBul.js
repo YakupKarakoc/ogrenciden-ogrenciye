@@ -69,7 +69,14 @@ const DersBul = () => {
       Bitiş Saati: ${endTime}
       Telefon Numarası: ${phoneNumber}`;
 
-    setStatusMessages((prevMessages) => [...prevMessages, newStatus]);
+    setStatusMessages((prevMessages) => [
+      ...prevMessages,
+      { message: newStatus, isTeacher: role === 'Öğretici' },
+    ]);
+  };
+
+  const handleDeleteMessage = (index) => {
+    setStatusMessages((prevMessages) => prevMessages.filter((_, i) => i !== index));
   };
 
   return (
@@ -144,61 +151,65 @@ const DersBul = () => {
             <label htmlFor="sessionType">Seans Türü Seçin: </label>
             <select id="sessionType" value={sessionType} onChange={handleSessionTypeChange}>
               <option value="">Seans Türü Seçin</option>
-              <option value="Tek kişilik soru çözümü">
-                Tek kişilik soru çözümü
-              </option>
-              <option value="Çoklu katılım ders anlatımı">
-                Çoklu katılım ders anlatımı
-              </option>
+              <option value="Konu Anlatımı">Konu Anlatımı</option>
+              <option value="Özel Ders">Özel Ders</option>
             </select>
           </div>
         )}
 
-        {/* Date Selection */}
-        {sessionType && (
+        {/* Date Picker */}
+        {role && sessionType && (
           <div>
-            <p>Tarih Seçin:</p>
-            <Calendar onChange={handleDateChange} value={selectedDate} />
+            <label htmlFor="date">Tarih Seçin:</label>
+            <Calendar
+              onChange={handleDateChange}
+              value={selectedDate}
+              className="react-calendar"
+            />
           </div>
         )}
 
-        {/* Time Selection */}
+        {/* Time Inputs */}
         {selectedDate && (
-          <div>
-            <label htmlFor="start-time">Başlangıç Saati:</label>
-            <input
-              type="time"
-              id="start-time"
-              value={startTime}
-              onChange={handleStartTimeChange}
-            />
-            <br />
-            <label htmlFor="end-time">Bitiş Saati:</label>
-            <input
-              type="time"
-              id="end-time"
-              value={endTime}
-              onChange={handleEndTimeChange}
-            />
-          </div>
+          <>
+            <div>
+              <label htmlFor="startTime">Başlangıç Saati:</label>
+              <input
+                type="time"
+                id="startTime"
+                value={startTime}
+                onChange={handleStartTimeChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="endTime">Bitiş Saati:</label>
+              <input
+                type="time"
+                id="endTime"
+                value={endTime}
+                onChange={handleEndTimeChange}
+              />
+            </div>
+          </>
         )}
 
         {/* Submit Button */}
-        {startTime && endTime && selectedDate && (
-          <button onClick={handleSubmit}>Durumu Yazdır</button>
-        )}
+        <button onClick={handleSubmit}>Gönder</button>
 
-        {/* Display Status Messages */}
-        {statusMessages.length > 0 && (
-          <div>
-            <h3>Yazdırılan Durumlar:</h3>
-            <ul>
-              {statusMessages.map((message, index) => (
-                <li key={index}>{message}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+        {/* Status Messages */}
+        <ul>
+          {statusMessages.map((status, index) => (
+            <li key={index} className={status.isTeacher ? 'teacher-status' : ''}>
+              <div>{status.message}</div>
+              <button
+                className="delete-btn"
+                onClick={() => handleDeleteMessage(index)}
+              >
+                X
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   );
