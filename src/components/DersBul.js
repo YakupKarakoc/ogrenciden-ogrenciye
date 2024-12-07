@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import "../styles/DersBul.css"; // Import CSS file
+import { Link } from 'react-router-dom'; // Add this import
+import "../styles/DersBul.css"; // CSS dosyasını içe aktarın
 
 const DersBul = () => {
   const classData = {
@@ -73,19 +74,21 @@ const DersBul = () => {
 
   return (
     <>
-      {/* Header Section with Logo and Navigation */}
+      {/* Header */}
       <div className="header">
-        <div className="logo">
-          <img src="path/to/logo.png" alt="Logo" />
+        <div className="logo-section">
+          <img src="/images/logo.jpg" alt="Logo" className="logo" />
+          <span className="logo-text">Öğrenciden Öğrenciye</span>
         </div>
-        <div className="navigation">
-          <button className="home-btn">Home</button>
-          <button className="exit-btn">Exit</button>
+        <div className="header-right">
+          <Link to="/home" className="home-login-button">Home</Link>
+          <Link to="/login" className="home-login-button">Login</Link>
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Main content */}
       <div className="container">
+        {/* Phone number input */}
         <div>
           <label htmlFor="phone">Telefon Numaranızı Girin:</label>
           <input
@@ -180,7 +183,7 @@ const DersBul = () => {
           </div>
         )}
 
-        {/* Submit Status */}
+        {/* Submit Button */}
         {startTime && endTime && selectedDate && (
           <button onClick={handleSubmit}>Durumu Yazdır</button>
         )}
