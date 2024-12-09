@@ -154,7 +154,7 @@
 }
 
 .favorite-icon.active {
-  color: #f44336; /* Kırmızı renk */
+  color: red; /* Kırmızı renk */
   transform: scale(1.2); /* Hafif büyüme efekti */
 }
 

@@ -14,22 +14,19 @@ import "../styles/SecondHandItems.css";
 function SecondHandItems() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [favorites, setFavorites] = useState([]);
-  const [hoveredCategory, setHoveredCategory] = useState(null); // Bu state tanımlandı
+  const [favorites, setFavorites] = useState([]); // Favoriler listesi
+  const [hoveredCategory, setHoveredCategory] = useState(null);
 
-  // Fetch products and favorites on component mount
+  // Favoriler ve ürünleri çek
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
         const userEmail = localStorage.getItem("userEmail");
-        if (!userEmail) {
-          throw new Error("Kullanıcı e-posta adresi bulunamadı.");
-        }
-
+        if (!userEmail) throw new Error("Kullanıcı e-posta adresi bulunamadı.");
         const response = await axios.get("http://localhost:5181/api/Favorites", {
           params: { userEmail },
         });
-        setFavorites(response.data.map((fav) => fav.itemId)); // Favori ürün ID'lerini al
+        setFavorites(response.data.map((fav) => fav.product.productId)); // Favori ürün ID'leri
       } catch (error) {
         message.error("Favoriler alınırken bir hata oluştu!");
       }
@@ -48,21 +45,22 @@ function SecondHandItems() {
     fetchProducts();
   }, []);
 
+  // Favoriye ekle/çıkar
   const toggleFavorite = async (productId) => {
     const userEmail = localStorage.getItem("userEmail");
     if (!userEmail) {
       message.error("Kullanıcı e-posta adresi bulunamadı.");
       return;
     }
-  
+
     try {
       if (favorites.includes(productId)) {
-        // Favoriden çıkarma
+        // Favoriden çıkar
         await axios.delete(`http://localhost:5181/api/Favorites/${userEmail}/${productId}`);
         setFavorites((prev) => prev.filter((id) => id !== productId));
         message.success("Favorilerden kaldırıldı!");
       } else {
-        // Favoriye ekleme
+        // Favoriye ekle
         await axios.post("http://localhost:5181/api/Favorites", {
           userEmail,
           itemId: productId,
@@ -75,9 +73,7 @@ function SecondHandItems() {
       message.error("Favori işlemi sırasında bir hata oluştu!");
     }
   };
-  
 
-  // Navigation functions
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
@@ -92,36 +88,12 @@ function SecondHandItems() {
   };
 
   const categories = [
-    {
-      icon: "📚",
-      title: "Ders Materyalleri",
-      items: ["Ders Kitapları", "Notlar", "Kırtasiye Malzemeleri", "Test Kitapları"],
-    },
-    {
-      icon: "💻",
-      title: "Elektronik",
-      items: ["Telefonlar", "Dizüstü Bilgisayarlar", "Kulaklıklar", "Tabletler"],
-    },
-    {
-      icon: "🛋️",
-      title: "Ev ve Mobilya",
-      items: ["Masa", "Sandalye", "Kitaplık", "Dekoratif Ürünler"],
-    },
-    {
-      icon: "👗",
-      title: "Giyim ve Moda",
-      items: ["Kadın Kıyafetleri", "Erkek Kıyafetleri", "Ayakkabılar", "Aksesuarlar"],
-    },
-    {
-      icon: "🎮",
-      title: "Spor ve Hobi",
-      items: ["Spor Ekipmanları", "Müzik Aletleri", "Oyun Konsolları", "Puzzle"],
-    },
-    {
-      icon: "📦",
-      title: "Diğer",
-      items: ["Evcil Hayvan Malzemeleri", "Seyahat Çantaları", "Bahçe Ekipmanları"],
-    },
+    { icon: "📚", title: "Ders Materyalleri", items: ["Ders Kitapları", "Notlar"] },
+    { icon: "💻", title: "Elektronik", items: ["Telefonlar", "Dizüstü Bilgisayarlar"] },
+    { icon: "🛋️", title: "Ev ve Mobilya", items: ["Masa", "Sandalye"] },
+    { icon: "👗", title: "Giyim ve Moda", items: ["Kadın Kıyafetleri", "Erkek Kıyafetleri"] },
+    { icon: "🎮", title: "Spor ve Hobi", items: ["Spor Ekipmanları", "Müzik Aletleri"] },
+    { icon: "📦", title: "Diğer", items: ["Evcil Hayvan Malzemeleri", "Seyahat Çantaları"] },
   ];
 
   return (
@@ -206,7 +178,6 @@ function SecondHandItems() {
                 <div className="ad-title">{product.title}</div>
                 <div className="ad-price">{product.price} TL</div>
                 <div className="ad-description">{product.description}</div>
-                <button className="add-to-cart-button">Sepete Ekle</button>
               </div>
             </div>
           ))

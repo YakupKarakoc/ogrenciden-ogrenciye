@@ -8,30 +8,32 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 function NewAd() {
-  const [form] = Form.useForm(); // Form instance for better handling
+  const [form] = Form.useForm();
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
-  const [sellerEmail, setSellerEmail] = useState("");
   const navigate = useNavigate();
 
-  // Kullanıcı bilgilerini localStorage'dan yükleme
+  // Kullanıcı bilgilerini localStorage'dan al
+  const sellerEmail = localStorage.getItem("userEmail");
+  const sellerId = localStorage.getItem("sellerId");
+
+  
+
   useEffect(() => {
-    const email = localStorage.getItem("userEmail");
-    if (email) {
-      setSellerEmail(email); // Kullanıcı e-posta adresini state'e kaydet
-    } else {
-      message.error("Kullanıcı bilgisi bulunamadı, lütfen giriş yapın.");
+    if (!sellerEmail) {
+      message.error("Lütfen giriş yapın.");
       navigate("/login");
     }
-  }, [navigate]);
+  }, [navigate, sellerEmail]);
+  
+  
 
-  // Form gönderim işlemi
   const handleFormSubmit = async () => {
-    if (!category || !title || !price || !description) {
-      message.error("Lütfen tüm alanları doldurun!");
+    if (!category || !title || !price) {
+      message.error("Lütfen tüm gerekli alanları doldurun!");
       return;
     }
 
@@ -41,9 +43,10 @@ function NewAd() {
     formData.append("Description", description || "");
     formData.append("Price", parseFloat(price));
     formData.append("SellerEmail", sellerEmail);
+    formData.append("SellerId", sellerId);
 
     if (image) {
-      formData.append("Image", image); // Görseli ekle
+      formData.append("Image", image);
     }
 
     try {
@@ -67,15 +70,14 @@ function NewAd() {
     }
   };
 
-  // Görsel yükleme işlemi
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     const allowedTypes = ["image/jpeg", "image/png"];
     if (file && !allowedTypes.includes(file.type)) {
-      message.error("Yalnızca JPEG veya PNG formatındaki resimler yüklenebilir.");
+      message.error("Yalnızca JPEG veya PNG formatındaki dosyalar yüklenebilir.");
       return;
     }
-    setImage(file); // Görseli state'e kaydet
+    setImage(file);
   };
 
   return (
@@ -101,7 +103,6 @@ function NewAd() {
               <Option value="Diğer">Diğer</Option>
             </Select>
           </Form.Item>
-
           <Form.Item label="Başlık" required>
             <Input
               placeholder="İlan Başlığı Giriniz"
@@ -109,7 +110,6 @@ function NewAd() {
               onChange={(e) => setTitle(e.target.value)}
             />
           </Form.Item>
-
           <Form.Item label="Fiyat" required>
             <Input
               type="number"
@@ -118,7 +118,6 @@ function NewAd() {
               onChange={(e) => setPrice(e.target.value)}
             />
           </Form.Item>
-
           <Form.Item label="Açıklama">
             <TextArea
               rows={4}
@@ -127,11 +126,9 @@ function NewAd() {
               onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Item>
-
           <Form.Item label="Görsel Yükle">
             <Input type="file" onChange={handleImageUpload} />
           </Form.Item>
-
           <Form.Item>
             <Button type="primary" htmlType="submit" block>
               İlan Yayınla

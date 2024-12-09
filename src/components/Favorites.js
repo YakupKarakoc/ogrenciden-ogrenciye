@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Button, message } from "antd";
-import { LogoutOutlined } from "@ant-design/icons";
+import { Input, Button, message } from "antd";
+import { HeartFilled, LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Favorites.css";
@@ -11,51 +11,101 @@ function Favorites() {
 
     useEffect(() => {
         const fetchFavorites = async () => {
-          try {
-            const userEmail = localStorage.getItem("userEmail");
-            if (!userEmail) {
-              throw new Error("Kullanıcı e-posta adresi bulunamadı.");
+            try {
+                const userEmail = localStorage.getItem("userEmail");
+                if (!userEmail) {
+                    throw new Error("Kullanıcı e-posta adresi bulunamadı.");
+                }
+
+                const response = await axios.get(`http://localhost:5181/api/Favorites`, {
+                    params: { userEmail },
+                });
+                setFavorites(response.data);
+            } catch (error) {
+                message.error("Favoriler alınırken bir hata oluştu!");
             }
-      
-            const response = await axios.get(`http://localhost:5181/api/Favorites`, {
-              params: { userEmail },
-            });
-            setFavorites(response.data);
-          } catch (error) {
-            message.error("Favoriler alınırken bir hata oluştu!");
-          }
         };
-      
+
         fetchFavorites();
-      }, []);
-      
+    }, []);
 
     const handleLogout = () => {
         localStorage.removeItem("token");
         navigate("/login");
     };
 
+    const handleProfile = () => {
+        navigate("/profile");
+    };
+
+    const removeFavorite = async (productId) => {
+        const userEmail = localStorage.getItem("userEmail");
+        if (!userEmail) {
+            message.error("Kullanıcı e-posta adresi bulunamadı.");
+            return;
+        }
+
+        try {
+            await axios.delete(`http://localhost:5181/api/Favorites/${userEmail}/${productId}`);
+            setFavorites((prev) => prev.filter((fav) => fav.product.productId !== productId));
+            message.success("Favorilerden kaldırıldı!");
+        } catch (error) {
+            message.error("Favori kaldırma sırasında bir hata oluştu!");
+        }
+    };
+
     return (
         <div className="favorites-page">
+            {/* Header */}
             <header className="favorites-header">
-                <h1>Favorilerim</h1>
-                <Button
-                    type="text"
-                    icon={<LogoutOutlined />}
-                    onClick={handleLogout}
-                >
-                    Çıkış
-                </Button>
+                <div className="logo" onClick={() => navigate("/home")}>
+                    <img src="/images/logo.jpg" alt="Logo" className="logo-image" />
+                    <span className="logo-text">Öğrenciden Öğrenciye</span>
+                </div>
+                <Input
+                    placeholder="Favorilerinizde arama yapın..."
+                    className="search-input"
+                    allowClear
+                />
+                <div className="header-buttons">
+                    <Button type="text" icon={<UserOutlined />} onClick={handleProfile}>
+                        Hesabım
+                    </Button>
+                    <Button type="text" icon={<LogoutOutlined />} onClick={handleLogout}>
+                        Çıkış
+                    </Button>
+                </div>
             </header>
+
+            {/* Title */}
+            <h1 className="favorites-title">Favorilerim</h1>
+
+            {/* Favorites Grid */}
             <div className="favorites-container">
                 {favorites.length === 0 ? (
                     <p>Henüz favori eklenmemiş.</p>
                 ) : (
                     favorites.map((fav) => (
                         <div key={fav.favoriteId} className="favorite-card">
-                            <h3>Favori ID: {fav.itemId}</h3>
-                            <p>Tip: {fav.itemType}</p>
-                            <p>Eklenme Tarihi: {new Date(fav.addedDate).toLocaleString()}</p>
+                            <HeartFilled
+                                className="favorite-icon active"
+                                onClick={() => removeFavorite(fav.product.productId)}
+                            />
+                            <div className="favorite-image-container">
+                                <img
+                                    src={`http://localhost:5181${fav.product.imagePath}`}
+                                    alt={fav.product.title}
+                                    className="favorite-image"
+                                />
+                            </div>
+                            <div className="favorite-details">
+                                <h3 className="favorite-title">{fav.product.title}</h3>
+                                <p className="favorite-price">{fav.product.price} TL</p>
+                                <p className="favorite-description">{fav.product.description}</p>
+                                <p className="favorite-seller">
+                                    Satıcı: {fav.product.sellerName}
+                                </p>
+                            </div>
                         </div>
                     ))
                 )}
