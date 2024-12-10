@@ -168,7 +168,7 @@ const DersBul = () => {
             <label htmlFor="sessionType">Seans Türü Seçin: </label>
             <select id="sessionType" value={sessionType} onChange={handleSessionTypeChange}>
               <option value="">Seans Türü Seçin</option>
-              <option value="Konu Anlatımı">Konu Anlatımı</option>
+              <option value="Konu Anlatımı">Çok kişili Konu Anlatımı</option>
               <option value="Özel Ders">Özel Ders</option>
             </select>
           </div>
