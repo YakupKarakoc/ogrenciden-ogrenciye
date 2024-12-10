@@ -6,7 +6,7 @@ import "../styles/DersBul.css"; // CSS dosyasını içe aktarın
 
 const DersBul = () => {
   const classData = {
-    1: ['Matematik', 'Fen Bilgisi', 'Türkçe', 'Sosyal Bilgiler'],
+    1: ['Mat', 'Fen Bilgisi', 'Türkçe', 'Sosyal Bilgiler'],
     2: ['Matematik', 'Fizik', 'Kimya', 'Biyoloji'],
     3: ['Matematik', 'Edebiyat', 'Coğrafya', 'Tarih'],
     4: ['Matematik', 'Felsefe', 'Kimya', 'Psikoloji'],
