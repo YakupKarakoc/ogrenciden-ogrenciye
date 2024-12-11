@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Input, Button, message } from "antd";
-import { HeartFilled, LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { LogoutOutlined, UserOutlined, HeartFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Favorites.css";
@@ -58,20 +58,30 @@ function Favorites() {
         <div className="favorites-page">
             {/* Header */}
             <header className="favorites-header">
-                <div className="logo" onClick={() => navigate("/home")}>
-                    <img src="/images/logo.jpg" alt="Logo" className="logo-image" />
-                    <span className="logo-text">Öğrenciden Öğrenciye</span>
+                <div className="header-logo-section" onClick={() => navigate("/home")}>
+                    <img src="/images/logo.jpg" alt="Logo" className="logo" />
+                    <span className="header-logo-text">Öğrenciden Öğrenciye</span>
                 </div>
                 <Input
-                    placeholder="Favorilerinizde arama yapın..."
-                    className="search-input"
+                    placeholder="Aradığınız ürün, kategori veya markayı yazınız.."
+                    className="header-search-input"
                     allowClear
                 />
                 <div className="header-buttons">
-                    <Button type="text" icon={<UserOutlined />} onClick={handleProfile}>
+                    <Button
+                        type="text"
+                        icon={<UserOutlined />}
+                        className="header-button"
+                        onClick={handleProfile}
+                    >
                         Hesabım
                     </Button>
-                    <Button type="text" icon={<LogoutOutlined />} onClick={handleLogout}>
+                    <Button
+                        type="text"
+                        icon={<LogoutOutlined />}
+                        className="header-button"
+                        onClick={handleLogout}
+                    >
                         Çıkış
                     </Button>
                 </div>

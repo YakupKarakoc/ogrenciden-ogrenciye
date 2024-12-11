@@ -7,9 +7,9 @@ import Profile from './components/Profile';
 import SecondHandItems from './components/SecondHandItems';
 import NotPaylasim from './components/NotPaylasim';
 import NewAd from './components/NewAd';
-import DersBul from './components/DersBul';
 import EvArkadasi from './components/EvArkadasi';
 import Favorites from "./components/Favorites";
+import ProductDetail from "./components/ProductDetail"; // Yeni detay bileşeni
 
 function App() {
   return (
@@ -21,9 +21,9 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/ikincielesya" element={<SecondHandItems />} />
+        <Route path="/products/:id" element={<ProductDetail />} /> {/* Yeni rota */}
         <Route path="/notpaylasim" element={<NotPaylasim />} /> 
-        <Route path="/new-ad" element={<NewAd/>} />
-        <Route path="/dersilani2" element={<DersBul />} /> 
+        <Route path="/new-ad" element={<NewAd/>} /> 
         <Route path="/evarkadasi" element={<EvArkadasi />} />
         <Route path="/favorites" element={<Favorites />} />
 

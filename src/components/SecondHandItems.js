@@ -14,10 +14,10 @@ import "../styles/SecondHandItems.css";
 function SecondHandItems() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [favorites, setFavorites] = useState([]); // Favoriler listesi
+  const [favorites, setFavorites] = useState([]);
   const [hoveredCategory, setHoveredCategory] = useState(null);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-  // Favoriler ve ürünleri çek
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
@@ -26,7 +26,7 @@ function SecondHandItems() {
         const response = await axios.get("http://localhost:5181/api/Favorites", {
           params: { userEmail },
         });
-        setFavorites(response.data.map((fav) => fav.product.productId)); // Favori ürün ID'leri
+        setFavorites(response.data.map((fav) => fav.product.productId));
       } catch (error) {
         message.error("Favoriler alınırken bir hata oluştu!");
       }
@@ -45,7 +45,6 @@ function SecondHandItems() {
     fetchProducts();
   }, []);
 
-  // Favoriye ekle/çıkar
   const toggleFavorite = async (productId) => {
     const userEmail = localStorage.getItem("userEmail");
     if (!userEmail) {
@@ -55,12 +54,10 @@ function SecondHandItems() {
 
     try {
       if (favorites.includes(productId)) {
-        // Favoriden çıkar
         await axios.delete(`http://localhost:5181/api/Favorites/${userEmail}/${productId}`);
         setFavorites((prev) => prev.filter((id) => id !== productId));
         message.success("Favorilerden kaldırıldı!");
       } else {
-        // Favoriye ekle
         await axios.post("http://localhost:5181/api/Favorites", {
           userEmail,
           itemId: productId,
@@ -87,6 +84,18 @@ function SecondHandItems() {
     navigate("/favorites");
   };
 
+  const handleMyAds = () => {
+    navigate("/my-ads");
+  };
+
+  const handleMessages = () => {
+    navigate("/messages");
+  };
+
+  const handleNewAd = () => {
+    navigate("/new-ad");
+  };
+
   const categories = [
     { icon: "📚", title: "Ders Materyalleri", items: ["Ders Kitapları", "Notlar"] },
     { icon: "💻", title: "Elektronik", items: ["Telefonlar", "Dizüstü Bilgisayarlar"] },
@@ -100,26 +109,58 @@ function SecondHandItems() {
     <div className="second-hand-page">
       {/* Header */}
       <header className="second-hand-header">
-        <div className="logo" onClick={() => navigate("/home")}>
-          <img src="/images/logo.jpg" alt="Logo" className="logo-image" />
-          <span className="logo-text">Öğrenciden Öğrenciye</span>
+        <div className="header-logo-section">
+          <img src="/images/logo.jpg" alt="Logo" className="logo" onClick={() => navigate("/home")}/>
+          <span className="header-logo-text" onClick={() => navigate("/home")}>Öğrenciden Öğrenciye</span>
+          <Input
+            placeholder="Aradığınız ürün, kategori veya markayı yazınız.."
+            className="header-search-input"
+            
+          />
         </div>
-        <Input
-          placeholder="Aradığınız ürün, kategori veya markayı yazınız.."
-          className="search-input"
-          allowClear
-        />
         <div className="header-buttons">
-          <Button type="text" icon={<PlusCircleOutlined />} onClick={() => navigate("/new-ad")}>
+          <Button
+            type="text"
+            icon={<PlusCircleOutlined />}
+            className="header-button"
+            onClick={handleNewAd}
+          >
             İlan Ver
           </Button>
-          <Button type="text" icon={<UserOutlined />} onClick={handleProfile}>
-            Hesabım
-          </Button>
-          <Button type="text" icon={<HeartOutlined />} onClick={handleFavoritesPage}>
+          <div
+            className="account-dropdown-container"
+            onMouseEnter={() => setIsDropdownVisible(true)}
+            onMouseLeave={() => setIsDropdownVisible(false)}
+          >
+            <Button type="text" icon={<UserOutlined />} className="header-button">
+              Hesabım
+            </Button>
+            {isDropdownVisible && (
+              <div
+                className="account-dropdown"
+                onMouseEnter={() => setIsDropdownVisible(true)}
+                onMouseLeave={() => setIsDropdownVisible(false)}
+              >
+                <div onClick={handleProfile}>Kullanıcı Bilgilerim</div>
+                <div onClick={handleMyAds}>İlanlarım</div>
+                <div onClick={handleMessages}>Mesajlarım</div>
+              </div>
+            )}
+          </div>
+          <Button
+            type="text"
+            icon={<HeartOutlined />}
+            className="header-button"
+            onClick={handleFavoritesPage}
+          >
             Favorilerim
           </Button>
-          <Button type="text" icon={<LogoutOutlined />} onClick={handleLogout}>
+          <Button
+            type="text"
+            icon={<LogoutOutlined />}
+            className="header-button"
+            onClick={handleLogout}
+          >
             Çıkış
           </Button>
         </div>
@@ -155,16 +196,26 @@ function SecondHandItems() {
           <p>Henüz bir ilan bulunmuyor.</p>
         ) : (
           products.map((product) => (
-            <div key={product.productId} className="ad-card">
+            <div
+              key={product.productId}
+              className="ad-card"
+              onClick={() => navigate(`/products/${product.productId}`)}
+            >
               {favorites.includes(product.productId) ? (
                 <HeartFilled
                   className="favorite-icon active"
-                  onClick={() => toggleFavorite(product.productId)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFavorite(product.productId);
+                  }}
                 />
               ) : (
                 <HeartOutlined
                   className="favorite-icon"
-                  onClick={() => toggleFavorite(product.productId)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFavorite(product.productId);
+                  }}
                 />
               )}
               <div className="ad-image-container">

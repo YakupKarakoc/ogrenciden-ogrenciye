@@ -46,37 +46,36 @@ const Profile = () => {
   };
 
   const handleSave = () => {
-    if (!profileInfo.phoneNumber) {
-      message.error("Telefon numarası boş olamaz!");
+    if (!profileInfo.phoneNumber && !newPassword) {
+      message.error("Lütfen telefon numarası veya şifre alanlarından en az birini doldurun!");
       return;
     }
-  
+
     if (newPassword && newPassword !== confirmPassword) {
       message.error('Şifreler eşleşmiyor. Lütfen kontrol edin.');
       return;
     }
-  
+
     axios.put('http://localhost:5181/api/Auth/profile/update', {
       email: profileInfo.email,
       phoneNumber: profileInfo.phoneNumber,
       newPassword: newPassword
     })
-    .then(response => {
-      if (response.data.success) {
-        message.success('Profil başarıyla güncellendi!');
-        setIsEditing(false); // Düzenleme modundan çık
-        setNewPassword(''); // Şifre alanlarını temizle
-        setConfirmPassword('');
-      } else {
-        message.error('Profil güncellenemedi. Lütfen tekrar deneyin.');
-      }
-    })
-    .catch(error => {
-      message.error('Profil güncelleme sırasında hata oluştu.');
-      console.error('Profil güncelleme sırasında hata oluştu:', error);
-    });
+      .then(response => {
+        if (response.data.success) {
+          message.success('Profil başarıyla güncellendi!');
+          setIsEditing(false); // Düzenleme modundan çık
+          setNewPassword(''); // Şifre alanlarını temizle
+          setConfirmPassword('');
+        } else {
+          message.error('Profil güncellenemedi. Lütfen tekrar deneyin.');
+        }
+      })
+      .catch(error => {
+        message.error('Profil güncelleme sırasında hata oluştu.');
+        console.error('Profil güncelleme sırasında hata oluştu:', error);
+      });
   };
-  
 
   return (
     <div className="profile-container">
@@ -102,7 +101,7 @@ const Profile = () => {
           <input
             type="tel"
             name="phoneNumber"
-            value={profileInfo.phoneNumber}
+            value={profileInfo.phoneNumber || ''}
             onChange={handleChange}
           />
         ) : (

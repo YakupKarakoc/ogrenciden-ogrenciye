@@ -9,11 +9,11 @@
 /* Header */
 .second-hand-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   padding: 15px 30px;
-  background-color: #4a90e2;
-  color: white;
+  background: linear-gradient(135deg, #4a90e2, #6bc1e9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: fixed;
   top: 0;
   left: 0;
@@ -21,25 +21,33 @@
   z-index: 10;
 }
 
-.logo {
+.header-logo-section {
   display: flex;
   align-items: center;
-  font-size: 1.4em;
-  font-weight: bold;
-  cursor: pointer;
 }
 
-.logo-image {
+.logo {
   width: 50px;
   height: 50px;
-  margin-right: 10px;
   border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
 }
 
-.search-input {
-  flex: 1;
-  max-width: 400px;
-  margin: 0 20px;
+.header-logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  margin-right: 0px;
+}
+
+.header-search-input {
+  width: 330px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-right: 0px;
 }
 
 .header-buttons {
@@ -47,10 +55,26 @@
   gap: 15px;
 }
 
+.header-button {
+  font-size: 1rem;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.header-button:hover {
+  background-color: white;
+  color: #4a90e2;
+  transform: scale(1.05);
+}
+
+
 /* Sidebar */
 .sidebar {
   position: fixed;
-  top: 80px;
+  top: 85px;
   left: 0;
   width: 200px;
   background-color: #f8f8fc;
@@ -214,20 +238,21 @@
   background-color: #357abd;
 }
 
-/* Hesabım Dropdown */
 .account-dropdown-container {
   position: relative;
 }
 
 .account-dropdown {
   position: absolute;
-  top: 40px; /* Dropdown, butonun hemen altına gelir */
+  top: 40px;
   right: 0;
   background-color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   z-index: 1000;
   width: 150px;
+  display: block;
+  padding: 10px 0;
 }
 
 .account-dropdown div {
@@ -238,13 +263,19 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Hover durumunda belirginleştir */
 .account-dropdown div:hover {
-  background-color: #4a90e2; /* Mavi arka plan */
-  color: #fff; /* Yazı rengi beyaz */
+  background-color: #4a90e2;
+  color: #fff;
 }
 
+/* Hesabım butonunun etkileşimlerini düzenleme */
+.header-buttons {
+  display: flex;
+  gap: 15px;
+}
 
-
-
-
+.header-buttons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
