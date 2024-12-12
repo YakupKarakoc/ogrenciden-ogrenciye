@@ -18,6 +18,7 @@ function SecondHandItems() {
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
+  //deneme
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
