@@ -1,0 +1,125 @@
+.my-ads-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f0f8ff;
+    padding: 20px;
+  }
+  
+  .my-ads-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #4a90e2, #6bc1e9);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+  }
+  
+  .header-logo-section {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .header-logo-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .header-search-input {
+    width: 330px;
+    border-radius: 8px;
+    padding: 8px 10px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 20px;
+  }
+  
+  .header-buttons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .header-button {
+    font-size: 1rem;
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .header-button:hover {
+    background-color: white;
+    color: #4a90e2;
+    transform: scale(1.05);
+  }
+  
+  .my-ads-title {
+    text-align: center;
+    margin-top: 100px;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .ads-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* Her satırda 7 kart */
+    gap: 15px;
+    margin: 20px auto;
+    width: 100%; /* Sayfayı güzelce dolduracak şekilde */
+  }
+  
+  .ad-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 15px;
+    transition: transform 0.3s ease;
+    overflow: hidden; /* Taşmaları engeller */
+    bottom: 88px;
+  }
+  
+  .ad-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .ad-card img {
+    width: 110%;
+    height: 210px; /* Daha düzenli bir görünüm için */
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .ad-card h3 {
+    font-size: 1rem;
+    color: #333;
+    text-align: center;
+  }
+  
+  .ad-card p {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+  

@@ -9,7 +9,8 @@ import NotPaylasim from './components/NotPaylasim';
 import NewAd from './components/NewAd';
 import EvArkadasi from './components/EvArkadasi';
 import Favorites from "./components/Favorites";
-import ProductDetail from "./components/ProductDetail"; // Yeni detay bileşeni
+import ProductDetail from "./components/ProductDetail";
+import MyAds from "./components/MyAds"; // Yeni detay bileşeni
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/new-ad" element={<NewAd/>} /> 
         <Route path="/evarkadasi" element={<EvArkadasi />} />
         <Route path="/favorites" element={<Favorites />} />
+        <Route path="/my-ads" element={<MyAds />} />
 
       </Routes>
     </Router>
