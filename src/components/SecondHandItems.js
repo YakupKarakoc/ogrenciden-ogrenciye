@@ -116,6 +116,8 @@ function SecondHandItems() {
           <Input
             placeholder="Aradığınız ürün, kategori veya markayı yazınız.."
             className="header-search-input"
+            allowClear
+            
             
           />
         </div>
