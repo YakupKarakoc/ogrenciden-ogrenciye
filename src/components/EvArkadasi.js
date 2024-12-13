@@ -1,23 +1,25 @@
 import React, { useState } from "react";
-import { Input, Button, Modal, Select, Upload, Card } from "antd";
+import { Input, Button, Modal, Upload, Card, Select, Checkbox, Tag } from "antd";
 import {
   UserOutlined,
   LogoutOutlined,
   PlusCircleOutlined,
   UploadOutlined,
   SearchOutlined,
+  HeartOutlined,
+  HeartFilled,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "../styles/EvArkadasi.css";
 
 const { Meta } = Card;
-const { TextArea } = Input;
 const { Option } = Select;
 
 function EvArkadasi() {
   const navigate = useNavigate();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [selectedAd, setSelectedAd] = useState(null);
   const [ads, setAds] = useState([
     {
       id: 1,
@@ -26,6 +28,7 @@ function EvArkadasi() {
       price: "4500 TL",
       description: "Metroya yakın, geniş ve kullanışlı.",
       photo: "/images/house1.jpeg",
+      isFavorite: false,
     },
     {
       id: 2,
@@ -34,6 +37,7 @@ function EvArkadasi() {
       price: "3000 TL",
       description: "Sessiz ve doğa ile iç içe bir çevre.",
       photo: "/images/house2.jpeg",
+      isFavorite: false,
     },
     {
       id: 3,
@@ -42,30 +46,24 @@ function EvArkadasi() {
       price: "2500 TL",
       description: "Minimalist yaşam tarzına uygun.",
       photo: "/images/house3.jpeg",
+      isFavorite: false,
     },
   ]);
+
+  const [favorites, setFavorites] = useState([]);
 
   const [newAd, setNewAd] = useState({
     address: "",
     features: "",
     price: "",
-    roommateCriteria: "",
     description: "",
+    roommateCriteria: "",
     photo: null,
+    isFavorite: false,
   });
 
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setNewAd({
-      address: "",
-      features: "",
-      price: "",
-      roommateCriteria: "",
-      description: "",
-      photo: null,
-    });
-  };
+  const closeModal = () => setIsModalOpen(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -78,28 +76,42 @@ function EvArkadasi() {
     }
   };
 
+  const toggleFavorite = (id) => {
+    const updatedAds = ads.map((ad) =>
+      ad.id === id ? { ...ad, isFavorite: !ad.isFavorite } : ad
+    );
+    setAds(updatedAds);
+    const favoriteAds = updatedAds.filter((ad) => ad.isFavorite);
+    setFavorites(favoriteAds);
+  };
+
+  const openDetailModal = (ad) => {
+    setSelectedAd(ad);
+    setIsDetailModalOpen(true);
+  };
+
+  const closeDetailModal = () => setIsDetailModalOpen(false);
+
   const handleSaveAd = () => {
     const newAdWithId = {
       ...newAd,
       id: ads.length + 1,
       photo: newAd.photo ? URL.createObjectURL(newAd.photo) : null,
+      isFavorite: false,
     };
     setAds([...ads, newAdWithId]);
     closeModal();
   };
 
-  const handleLogoClick = () => navigate("/home");
-  const handleProfileClick = () => navigate("/profile");
-  const handleLogoutClick = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+  const navigateToFavorites = () => {
+    setAds(favorites);
   };
 
   return (
     <div className="evarkadasi-wrapper">
       {/* Header */}
       <header className="evarkadasi-header">
-        <div className="logo-section" onClick={handleLogoClick}>
+        <div className="logo-section" onClick={() => navigate("/home")}>
           <img src="/images/logo.jpg" alt="Logo" className="logo" />
           <span className="logo-text">Öğrenciden Öğrenciye</span>
         </div>
@@ -114,6 +126,13 @@ function EvArkadasi() {
           <Button
             type="primary"
             className="header-button"
+            onClick={navigateToFavorites}
+          >
+            Favorilerim
+          </Button>
+          <Button
+            type="primary"
+            className="header-button"
             icon={<PlusCircleOutlined />}
             onClick={openModal}
           >
@@ -123,7 +142,7 @@ function EvArkadasi() {
             type="text"
             className="header-button"
             icon={<UserOutlined />}
-            onClick={handleProfileClick}
+            onClick={() => navigate("/profile")}
           >
             Profilim
           </Button>
@@ -131,7 +150,10 @@ function EvArkadasi() {
             type="text"
             className="header-button"
             icon={<LogoutOutlined />}
-            onClick={handleLogoutClick}
+            onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/login");
+            }}
           >
             Çıkış Yap
           </Button>
@@ -140,95 +162,93 @@ function EvArkadasi() {
 
       {/* Main Content */}
       <div className="evarkadasi-content">
-        <h1 className="page-title">Ev Arkadaşı İlanları</h1>
-        <div className="ads-list">
+        <div className="filter-container">
+          <h3>Filtrele</h3>
+          <div className="filter-group">
+            <label>Şehir</label>
+            <Select placeholder="Şehir seçin" style={{ width: "100%" }}>
+              <Option value="istanbul">İstanbul</Option>
+              <Option value="izmir">İzmir</Option>
+              <Option value="ankara">Ankara</Option>
+            </Select>
+          </div>
+          <div className="filter-group">
+            <label>Fiyat Aralığı</label>
+            <Input placeholder="Örneğin: 1000 - 5000" />
+          </div>
+          <div className="filter-group">
+            <label>Oda Sayısı</label>
+            <Checkbox>1+1</Checkbox>
+            <Checkbox>2+1</Checkbox>
+            <Checkbox>3+1</Checkbox>
+          </div>
+          <div className="filter-group">
+            <label>Diğer Özellikler</label>
+            <Checkbox>Metrobüse Yakın</Checkbox>
+            <Checkbox>Balkonlu</Checkbox>
+            <Checkbox>Mobilyalı</Checkbox>
+          </div>
+          <Button type="primary" className="apply-filter-button">
+            Filtrele
+          </Button>
+        </div>
+
+        <div className="ads-container">
           {ads.map((ad) => (
             <Card
               key={ad.id}
               hoverable
-              cover={<img alt="Ev Fotoğrafı" src={ad.photo || "/images/default.jpg"} />}
+              cover={
+                <img
+                  alt="Ev Fotoğrafı"
+                  src={ad.photo || "/images/default.jpg"}
+                  className="ad-image"
+                />
+              }
               className="ad-card"
+              onClick={() => openDetailModal(ad)}
             >
               <Meta
                 title={`${ad.address} - ${ad.price}`}
-                description={`${ad.features} | ${ad.description}`}
+                description={`${ad.features}`}
               />
+              {ad.isFavorite ? (
+                <HeartFilled
+                  className="favorite-icon active"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFavorite(ad.id);
+                  }}
+                />
+              ) : (
+                <HeartOutlined
+                  className="favorite-icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFavorite(ad.id);
+                  }}
+                />
+              )}
             </Card>
           ))}
         </div>
       </div>
 
-      {/* İlan Ver Modal */}
+      {/* İlan Detay Modal */}
       <Modal
-        title="Ev Arkadaşı İlanı Ver"
-        visible={isModalOpen}
-        onCancel={closeModal}
+        title={selectedAd?.address}
+        visible={isDetailModalOpen}
+        onCancel={closeDetailModal}
         footer={null}
-        className="ad-modal"
       >
-        <form className="ad-form">
-          <div className="form-group">
-            <label>Ev Adresi:</label>
-            <Input
-              placeholder="Ev adresini girin"
-              name="address"
-              value={newAd.address}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Ev Özellikleri:</label>
-            <Input
-              placeholder="Örneğin: 3+1, balkonlu, eşyalı"
-              name="features"
-              value={newAd.features}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Kira Ücreti (TL):</label>
-            <Input
-              placeholder="Kira miktarını yazın"
-              name="price"
-              value={newAd.price}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Ev Arkadaşı Kriterleri:</label>
-            <TextArea
-              rows={3}
-              placeholder="İstenen kriterleri belirtin"
-              name="roommateCriteria"
-              value={newAd.roommateCriteria}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Açıklama:</label>
-            <TextArea
-              rows={4}
-              placeholder="Ev hakkında genel bilgi ve diğer açıklamalar"
-              name="description"
-              value={newAd.description}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Fotoğraf Yükle:</label>
-            <Upload
-              accept="image/*"
-              maxCount={1}
-              beforeUpload={() => false}
-              onChange={handleFileChange}
-            >
-              <Button icon={<UploadOutlined />}>Fotoğraf Seç</Button>
-            </Upload>
-          </div>
-          <Button type="primary" className="save-ad-button" onClick={handleSaveAd}>
-            Kaydet
-          </Button>
-        </form>
+        <img
+          alt="Detaylı Ev Fotoğrafı"
+          src={selectedAd?.photo}
+          style={{ width: "100%", marginBottom: "10px", borderRadius: "8px" }}
+        />
+        <p>Fiyat: {selectedAd?.price}</p>
+        <p>Özellikler: {selectedAd?.features}</p>
+        <p>Açıklama: {selectedAd?.description}</p>
       </Modal>
     </div>
   );
