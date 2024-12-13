@@ -18,6 +18,7 @@ function SecondHandItems() {
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
+  //deneme
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
@@ -115,6 +116,8 @@ function SecondHandItems() {
           <Input
             placeholder="Aradığınız ürün, kategori veya markayı yazınız.."
             className="header-search-input"
+            allowClear
+            
             
           />
         </div>
