@@ -11,7 +11,6 @@ import EvArkadasi from './components/EvArkadasi';
 import Favorites from "./components/Favorites";
 import ProductDetail from "./components/ProductDetail"; // Yeni detay bileşeni
 import DersBul from "./components/DersBul";
-import ProductDetail from "./components/ProductDetail";
 import MyAds from "./components/MyAds"; // Yeni detay bileşeni
 
 function App() {
