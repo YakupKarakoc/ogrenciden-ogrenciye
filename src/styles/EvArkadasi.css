@@ -53,18 +53,54 @@
   height: calc(100vh - 120px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
-.filter-group {
+.filter-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
   margin-bottom: 15px;
 }
 
+.filter-group {
+  margin-bottom: 20px;
+}
+
 .filter-group label {
+  font-size: 1.2rem;
   font-weight: bold;
   color: #4a90e2;
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.price-range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price-input {
+  width: 45%;
+  border-radius: 6px;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.price-separator {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #555;
+}
+
+.checkbox-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.select-multiple {
+  width: 100%;
 }
 
 .apply-filter-button {
@@ -151,4 +187,4 @@
 .ad-modal .details span {
   font-weight: bold;
   color: #4a90e2;
-}
+} 
