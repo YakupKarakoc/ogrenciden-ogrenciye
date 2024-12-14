@@ -9,7 +9,8 @@ import NotPaylasim from './components/NotPaylasim';
 import NewAd from './components/NewAd';
 import EvArkadasi from './components/EvArkadasi';
 import Favorites from "./components/Favorites";
-import ProductDetail from "./components/ProductDetail";
+import ProductDetail from "./components/ProductDetail"; // Yeni detay bileşeni
+import DersBul from "./components/DersBul";
 import MyAds from "./components/MyAds"; // Yeni detay bileşeni
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/dersilani2" element={<DersBul />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
