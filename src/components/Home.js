@@ -31,7 +31,7 @@ function Home() {
     {
       title: "Ders Notu Paylaşma",
       image: "/images/notpaylasim.webp",
-      link: "/notpaylasim", // Rota doğru ayarlandı
+      link: "/notpaylasim",
       description: [
         "Ders notlarınızı paylaşarak diğer öğrencilere yardımcı olun.",
         "1-5 yıldız arasında puanlama sistemi ile notlarınızı değerlendirin.",
@@ -61,9 +61,12 @@ function Home() {
 
   return (
     <div className="home-wrapper">
-      <header className="header">
-        <img src="/images/logo.jpg" alt="Logo" className="logo" />
-        <h1 className="header-title">Öğrenciden Öğrenciye</h1>
+      {/* Navbar */}
+      <header className="home-header">
+        <div className="logo-section" onClick={() => navigate("/home")}>
+          <img src="/images/logo.jpg" alt="Logo" className="logo" />
+          <span className="logo-text">Öğrenciden Öğrenciye</span>
+        </div>
         <div className="header-buttons">
           <Button
             type="default"
@@ -83,15 +86,17 @@ function Home() {
           </Button>
         </div>
       </header>
-      <div className="home-container">
+
+      {/* Modül Kartları */}
+      <div className="modules-container">
         {modules.map((mod, index) => (
           <div
             key={index}
-            className="module-section"
+            className="module-card"
             onClick={() => navigate(mod.link)}
           >
-            <div className="module-title">{mod.title}</div>
             <img src={mod.image} alt={mod.title} className="module-image" />
+            <h2 className="module-title">{mod.title}</h2>
             <ul className="module-description">
               {mod.description.map((item, idx) => (
                 <li key={idx}>{item}</li>
