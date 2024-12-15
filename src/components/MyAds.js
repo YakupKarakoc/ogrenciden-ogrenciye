@@ -2,12 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Input, Button, message } from "antd";
-import {
-  PlusCircleOutlined,
-  UserOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons";
-
+import { PlusCircleOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import "../styles/MyAds.css";
 
 function MyAds() {
   const [ads, setAds] = useState([]);

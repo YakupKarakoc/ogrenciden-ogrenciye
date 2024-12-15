@@ -11,7 +11,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  padding: 15px 20px;
   background: linear-gradient(135deg, #4a90e2, #6bc1e9);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -24,42 +24,47 @@
 .header-logo-section {
   display: flex;
   align-items: center;
+  gap: 40px; /* Logo ve yazı arası mesafe */
 }
 
-.logo {
-  width: 50px;
-  height: 50px;
+.header-logo-section .logo {
+  width: 53px;
+  height: 53px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 10px;
 }
 
 .header-logo-text {
   font-size: 1.5rem;
   font-weight: bold;
   color: white;
-  margin-right: 0px;
+  margin-left: -35px;
 }
 
-.header-search-input {
-  width: 330px;
+.header-logo-section .header-search-input {
+  width: 330px; /* Genişlik artırıldı */
   border-radius: 8px;
   padding: 8px 10px;
   border: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-right: 0px;
+  margin-right: -30px;
+}
+
+.header-logo-section .search-button {
+  margin-right: 30px;
+  width:80px;
 }
 
 .header-buttons {
   display: flex;
-  gap: 15px;
+  gap: 10px; /* Düğmeler arası mesafe */
 }
 
 .header-button {
   font-size: 1rem;
   color: white;
   background: rgba(255, 255, 255, 0.2);
-  padding: 10px 15px;
+  padding: 8px 15px;
   border-radius: 8px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -74,7 +79,7 @@
 /* Sidebar */
 .sidebar {
   position: fixed;
-  top: 85px;
+  top: 82px;
   left: 0;
   width: 200px;
   background-color: #f8f8fc;
@@ -135,34 +140,37 @@
 }
 
 /* Ürün Listesi */
-.ads-container {
+.second-ads-container {
   margin-left: 220px; /* Sidebar'ın sağında başlayacak */
-  padding: 20px;
+  margin-top: 90px;
+  padding: 10px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr); /* Her satırda 6 kart */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   justify-items: center; /* Kartları ortalar */
   position: relative; /* Z-index hiyerarşisini doğru kurar */
   z-index: 1; /* Dropdown'un altında kalır */
 }
 
 /* Ürün Kartları */
-.ad-card {
+.second-ads-container .secondhand-ad-card {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
   background-color: #ffffff;
-  padding: 10px;
-  width: 200px; /* Kart genişliği */
-  height: 350px; /* Kart yüksekliği */
-  margin-top: 70px; 
-  z-index: 1;
+  padding: 23px;
+  transition: transform 0.3s ease;
+  width: 90%;
+  max-width: 220px; /* Kart genişliği sınırı */
+  height: 350px;
+  margin-top: 15px;
+  
+  
 }
 
-.ad-card:hover {
+.secondhand-ad-card:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
@@ -188,6 +196,7 @@
   width: 100%;
   height: 180px; /* Görsel tam görünsün */
   text-align: center;
+  margin-bottom: 10px;
 }
 
 .ad-image {
@@ -195,23 +204,31 @@
   height: 100%;
   object-fit: cover;
   border-radius: 8px;
+
 }
 
 /* Kart Başlık ve Bilgiler */
 .ad-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Başlık, fiyat ve açıklamayı hizalar */
+  flex-grow: 1; /* İçeriğin tamamını doldurmasını sağlar */
   text-align: center;
 }
 
 .ad-title {
   font-size: 1em;
   font-weight: bold;
-  margin: 10px 0;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .ad-description {
   font-size: 0.8em;
   color: #666;
-  margin-bottom: 10px;
+  margin-bottom:10px;
+  text-align: center;
+  margin-top: auto;
 }
 
 .ad-price {
@@ -237,6 +254,49 @@
 .add-to-cart-button:hover {
   background-color: #357abd;
 }
+
+.account-dropdown-container {
+  position: relative;
+}
+
+.account-dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
+  width: 150px;
+  display: block;
+  padding: 10px 0;
+}
+
+.account-dropdown div {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.account-dropdown div:hover {
+  background-color: #4a90e2;
+  color: #fff;
+}
+
+/* Hesabım butonunun etkileşimlerini düzenleme */
+.header-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.header-buttons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .account-dropdown-container {
   position: relative;

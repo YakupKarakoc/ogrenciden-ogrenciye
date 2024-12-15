@@ -6,6 +6,7 @@ import {
   PlusCircleOutlined,
   UserOutlined,
   LogoutOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -15,10 +16,10 @@ function SecondHandItems() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-  //deneme
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
@@ -45,6 +46,26 @@ function SecondHandItems() {
     fetchFavorites();
     fetchProducts();
   }, []);
+
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      message.warning("Lütfen arama yapmak için bir kelime girin.");
+      return;
+    }
+
+    try {
+      const response = await axios.get("http://localhost:5181/api/Products/Search", {
+        params: { query: searchQuery },
+      });
+      setProducts(response.data);
+    } catch (error) {
+      if (error.response?.status === 404) {
+        message.info("Aradığınız kritere uygun ürün bulunamadı.");
+      } else {
+        message.error("Arama sırasında bir hata oluştu.");
+      }
+    }
+  };
 
   const toggleFavorite = async (productId) => {
     const userEmail = localStorage.getItem("userEmail");
@@ -89,10 +110,6 @@ function SecondHandItems() {
     navigate("/my-ads");
   };
 
-  const handleMessages = () => {
-    navigate("/messages");
-  };
-
   const handleNewAd = () => {
     navigate("/new-ad");
   };
@@ -108,18 +125,28 @@ function SecondHandItems() {
 
   return (
     <div className="second-hand-page">
-      {/* Header */}
       <header className="second-hand-header">
         <div className="header-logo-section">
-          <img src="/images/logo.jpg" alt="Logo" className="logo" onClick={() => navigate("/home")}/>
-          <span className="header-logo-text" onClick={() => navigate("/home")}>Öğrenciden Öğrenciye</span>
+          <img src="/images/logo.jpg" alt="Logo" className="logo" onClick={() => navigate("/home")} />
+          <span className="header-logo-text" onClick={() => navigate("/home")}>
+            Öğrenciden Öğrenciye
+          </span>
           <Input
             placeholder="Aradığınız ürün, kategori veya markayı yazınız.."
             className="header-search-input"
             allowClear
-            
-            
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
           />
+          <Button
+            type="primary"
+            icon={<SearchOutlined />}
+            className="search-button"
+            onClick={handleSearch}
+          >
+            Ara
+          </Button>
         </div>
         <div className="header-buttons">
           <Button
@@ -139,14 +166,10 @@ function SecondHandItems() {
               Hesabım
             </Button>
             {isDropdownVisible && (
-              <div
-                className="account-dropdown"
-                onMouseEnter={() => setIsDropdownVisible(true)}
-                onMouseLeave={() => setIsDropdownVisible(false)}
-              >
+              <div className="account-dropdown">
                 <div onClick={handleProfile}>Kullanıcı Bilgilerim</div>
                 <div onClick={handleMyAds}>İlanlarım</div>
-                <div onClick={handleMessages}>Mesajlarım</div>
+                <div onClick={() => navigate("/messages")}>Mesajlarım</div>
               </div>
             )}
           </div>
@@ -169,39 +192,38 @@ function SecondHandItems() {
         </div>
       </header>
 
-      {/* Sidebar */}
-      <div className="sidebar">
-        {categories.map((category, index) => (
-          <div
-            key={index}
-            className="category-card"
-            onMouseEnter={() => setHoveredCategory(index)}
-            onMouseLeave={() => setHoveredCategory(null)}
-          >
-            <div className="category-icon">{category.icon}</div>
-            <h3 className="category-title">{category.title}</h3>
-            {hoveredCategory === index && (
-              <div className="category-dropdown">
-                <ul>
-                  {category.items.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+     {/* Sidebar */}
+     <div className="sidebar">
+     {categories.map((category, index) => (
+       <div
+         key={index}
+         className="category-card"
+         onMouseEnter={() => setHoveredCategory(index)}
+         onMouseLeave={() => setHoveredCategory(null)}
+       >
+         <div className="category-icon">{category.icon}</div>
+         <h3 className="category-title">{category.title}</h3>
+         {hoveredCategory === index && (
+           <div className="category-dropdown">
+             <ul>
+               {category.items.map((item, idx) => (
+                 <li key={idx}>{item}</li>
+               ))}
+             </ul>
+           </div>
+         )}
+       </div>
+     ))}
+   </div>
 
-      {/* Product Cards */}
-      <div className="ads-container">
+      <div className="second-ads-container">
         {products.length === 0 ? (
           <p>Henüz bir ilan bulunmuyor.</p>
         ) : (
           products.map((product) => (
             <div
               key={product.productId}
-              className="ad-card"
+              className="secondhand-ad-card"
               onClick={() => navigate(`/products/${product.productId}`)}
             >
               {favorites.includes(product.productId) ? (

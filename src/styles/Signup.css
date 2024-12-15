@@ -15,14 +15,19 @@
   max-width: 100%;
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  border-radius: 30px;
-}
+.signup-container .header {
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    background-color: white; /* Arka planı beyaz yapar */
+    border-radius: 30px;
+  }
+  
+  
+
 
 .signup-logo {
   width: 95px;
@@ -33,10 +38,10 @@
 
 .signup-title {
   font-size: 1.8rem;
-  color: #4a90e2;
+  color: #568eff;
   font-weight: bold;
-  margin-top: 10%;
-  margin-right: 17%;
+  margin-top: 3%;
+  margin-right: 20%;
 }
 
 .form-row {
