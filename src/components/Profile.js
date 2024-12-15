@@ -55,26 +55,24 @@ const Profile = () => {
       message.error('Şifreler eşleşmiyor. Lütfen kontrol edin.');
       return;
     }
-
     axios.put('http://localhost:5181/api/Auth/profile/update', {
-      email: profileInfo.email,
-      phoneNumber: profileInfo.phoneNumber,
-      newPassword: newPassword
+      email: profileInfo.email,       // Zorunlu
+      phoneNumber: profileInfo.phoneNumber || null, // Opsiyonel
+      newPassword: newPassword || null // Opsiyonel
     })
       .then(response => {
         if (response.data.success) {
           message.success('Profil başarıyla güncellendi!');
-          setIsEditing(false); // Düzenleme modundan çık
-          setNewPassword(''); // Şifre alanlarını temizle
-          setConfirmPassword('');
+          setIsEditing(false);
         } else {
-          message.error('Profil güncellenemedi. Lütfen tekrar deneyin.');
+          message.error(response.data.message);
         }
       })
       .catch(error => {
-        message.error('Profil güncelleme sırasında hata oluştu.');
-        console.error('Profil güncelleme sırasında hata oluştu:', error);
+        console.error(error);
+        message.error('Profil güncelleme sırasında bir hata oluştu.');
       });
+    
   };
 
   return (
