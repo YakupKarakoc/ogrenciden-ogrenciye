@@ -115,12 +115,14 @@ function SecondHandItems() {
   };
 
   const categories = [
-    { icon: "📚", title: "Ders Materyalleri", items: ["Ders Kitapları", "Notlar"] },
-    { icon: "💻", title: "Elektronik", items: ["Telefonlar", "Dizüstü Bilgisayarlar"] },
-    { icon: "🛋️", title: "Ev ve Mobilya", items: ["Masa", "Sandalye"] },
-    { icon: "👗", title: "Giyim ve Moda", items: ["Kadın Kıyafetleri", "Erkek Kıyafetleri"] },
-    { icon: "🎮", title: "Spor ve Hobi", items: ["Spor Ekipmanları", "Müzik Aletleri"] },
-    { icon: "📦", title: "Diğer", items: ["Evcil Hayvan Malzemeleri", "Seyahat Çantaları"] },
+    { icon: "📚", title: "Ders Materyalleri", items: ["Ders Kitapları", "Kırtasiye Malzemeleri"] },
+    { icon: "💻", title: "Elektronik", items: ["Telefonlar", "Bilgisayar&Tablet&TV","Beyaz Eşya"] },
+    { icon: "🛋️", title: "Ev & Mobilya", items: ["Ev Gereçleri", "Mobilya"] },
+    { icon: "👗", title: "Giyim & Moda", items: ["Kadın Kıyafetleri", "Erkek Kıyafetleri"] },
+    { icon: "🎮", title: "Spor & Hobi", items: ["Spor Ekipmanları", "Müzik Aletleri"] },
+    { icon: "📦", title: "Kozmetik", items: ["Parfüm&Deodorant", "Kişisel Bakım"] },
+
+  
   ];
 
   return (

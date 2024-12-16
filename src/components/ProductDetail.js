@@ -116,9 +116,14 @@ function ProductDetail() {
               {new Date(product.createdAt).toLocaleDateString()}
             </p>
           </div>
-          <Button type="primary" className="contact-seller-button">
-            Satıcıyla İletişime Geç
-          </Button>
+          <Button
+          type="primary"
+          className="contact-seller-button"
+          onClick={() => navigate(`/messages/${product.sellerId}`)}
+        >
+          Satıcıyla İletişime Geç
+        </Button>
+
         </div>
       </div>
     </div>
