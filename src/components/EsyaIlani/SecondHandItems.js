@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/SecondHandItems.css";
+import "../../styles/EsyaIlani/SecondHandItems.css";
 
 function SecondHandItems() {
   const navigate = useNavigate();

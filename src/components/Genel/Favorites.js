@@ -3,7 +3,7 @@ import { Input, Button, message } from "antd";
 import { LogoutOutlined, UserOutlined, HeartFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/Favorites.css";
+import "../../styles/Genel/Favorites.css";
 
 function Favorites() {
     const [favorites, setFavorites] = useState([]);

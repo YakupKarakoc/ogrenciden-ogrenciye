@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Input, Radio, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/Signup.css";
+import "../../styles/Genel/Signup.css";
 
 function Signup() {
   const [email, setEmail] = useState("");

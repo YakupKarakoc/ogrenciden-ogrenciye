@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Calendar } from 'antd'; // Ant Design Calendar
 import { Link } from 'react-router-dom';
 import 'antd/dist/reset.css';
-import '../styles/DersBul.css';
+import '../../styles/DersIlani/DersBul.css';
 
 const DersBul = () => {
   const classData = {

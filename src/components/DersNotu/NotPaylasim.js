@@ -9,7 +9,7 @@ import {
   UploadOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import "../styles/NotPaylasim.css";
+import "../../styles/DersNotu/NotPaylasim.css";
 
 const { TextArea } = Input;
 const { Option } = Select;
