@@ -8,7 +8,7 @@ import {
   HeartOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
-import "../../styles/EsyaIlani/ProductDetail.css";
+import "../styles/ProductDetail.css";
 
 function ProductDetail() {
   const { id } = useParams();

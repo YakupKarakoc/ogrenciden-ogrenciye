@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Signup from './components/Genel/Signup';
-import Login from './components/Genel/Login';
-import Home from './components/Genel/Home';
-import Profile from './components/Genel/Profile';
-import SecondHandItems from './components/EsyaIlani/SecondHandItems';
-import NotPaylasim from './components/DersNotu/NotPaylasim';
-import NewAd from './components/EsyaIlani/NewAd';
-import EvArkadasi from './components/EvArkadasi/EvArkadasi';
-import Favorites from "./components/Genel/Favorites";
-import ProductDetail from "./components/EsyaIlani/ProductDetail"; // Yeni detay bileşeni
-import DersBul from "./components/DersIlani/DersBul";
-import MyAds from "./components/EsyaIlani/MyAds"; // Yeni detay bileşeni
+import Signup from './components/Signup';
+import Login from './components/Login';
+import Home from './components/Home';
+import Profile from './components/Profile';
+import SecondHandItems from './components/SecondHandItems';
+import NotPaylasim from './components/NotPaylasim';
+import NewAd from './components/NewAd';
+import EvArkadasi from './components/EvArkadasi';
+import Favorites from "./components/Favorites";
+import ProductDetail from "./components/ProductDetail"; // Yeni detay bileşeni
+import DersBul from "./components/DersBul";
+import MyAds from "./components/MyAds"; // Yeni detay bileşeni
 
 function App() {
   return (

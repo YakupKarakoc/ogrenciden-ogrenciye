@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Input, Button, Select, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../../styles/EsyaIlani/NewAd.css";
+import "../styles/NewAd.css";
 
 const { TextArea } = Input;
 const { Option } = Select;

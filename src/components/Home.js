@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "antd";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import "../../styles/Genel/Home.css";
+import "../styles/Home.css";
 
 function Home() {
   const navigate = useNavigate();
