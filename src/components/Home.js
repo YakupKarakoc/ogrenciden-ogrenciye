@@ -41,7 +41,7 @@ function Home() {
     {
       title: "Ev Arkadaşı Bulma",
       image: "/images/evarkadasi.webp",
-      link: "/evarkadasi",
+      link: "/survey",
       description: [
         "Profil analizi ile benzer karakterdeki kişilerle eşleşin.",
         "Ev arkadaşı arayışınızı duyurmak için ilan oluşturun.",

@@ -20,6 +20,14 @@ function SecondHandItems() {
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
+  const handleCategoryClick = (category, subCategory) => {
+    if (subCategory) {
+      navigate(`/category/${category}/${subCategory}`);
+    } else {
+      navigate(`/category/${category}`);
+    }
+  };
+
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
@@ -33,6 +41,8 @@ function SecondHandItems() {
         message.error("Favoriler alınırken bir hata oluştu!");
       }
     };
+
+   
 
     const fetchProducts = async () => {
       try {
@@ -116,11 +126,12 @@ function SecondHandItems() {
 
   const categories = [
     { icon: "📚", title: "Ders Materyalleri", items: ["Ders Kitapları", "Kırtasiye Malzemeleri"] },
-    { icon: "💻", title: "Elektronik", items: ["Telefonlar", "Bilgisayar&Tablet&TV","Beyaz Eşya"] },
-    { icon: "🛋️", title: "Ev & Mobilya", items: ["Ev Gereçleri", "Mobilya"] },
-    { icon: "👗", title: "Giyim & Moda", items: ["Kadın Kıyafetleri", "Erkek Kıyafetleri"] },
-    { icon: "🎮", title: "Spor & Hobi", items: ["Spor Ekipmanları", "Müzik Aletleri"] },
+    { icon: "💻", title: "Elektronik", items: ["Telefonlar", "Bilgisayar&Tablet&TV","Beyaz Eşya","Elektronik Gereçler"] },
+    { icon: "🛋️", title: "Ev ve Mobilya", items: ["Ev Gereçleri", "Mobilya"] },
+    { icon: "👗", title: "Giyim ve Moda", items: ["Kadın Kıyafetleri", "Erkek Kıyafetleri"] },
+    { icon: "🎮", title: "Spor ve Hobi", items: ["Spor Ekipmanları", "Müzik Aletleri"] },
     { icon: "📦", title: "Kozmetik", items: ["Parfüm&Deodorant", "Kişisel Bakım"] },
+    { icon: "📦", title: "Diğer", items: ["Ayakkabı", "Çanta"] },
 
   
   ];
@@ -194,29 +205,35 @@ function SecondHandItems() {
         </div>
       </header>
 
-     {/* Sidebar */}
-     <div className="sidebar">
-     {categories.map((category, index) => (
-       <div
-         key={index}
-         className="category-card"
-         onMouseEnter={() => setHoveredCategory(index)}
-         onMouseLeave={() => setHoveredCategory(null)}
-       >
-         <div className="category-icon">{category.icon}</div>
-         <h3 className="category-title">{category.title}</h3>
-         {hoveredCategory === index && (
-           <div className="category-dropdown">
-             <ul>
-               {category.items.map((item, idx) => (
-                 <li key={idx}>{item}</li>
-               ))}
-             </ul>
-           </div>
-         )}
-       </div>
-     ))}
-   </div>
+      <div className="sidebar">
+      {categories.map((category, index) => (
+        <div
+          key={index}
+          className="category-card"
+          onClick={() => handleCategoryClick(category.title)} // Kategoriye tıklanırsa
+          onMouseEnter={() => setHoveredCategory(index)}
+          onMouseLeave={() => setHoveredCategory(null)}
+        >
+          <div className="category-icon">{category.icon}</div>
+          <h3 className="category-title">{category.title}</h3>
+          {hoveredCategory === index && (
+            <div className="category-dropdown">
+              <ul>
+                {category.items.map((item, idx) => (
+                  <li key={idx} onClick={(e) => { 
+                    e.stopPropagation(); // Ana kategoriye tıklamayı engelle
+                    handleCategoryClick(category.title, item); // Alt kategoriye tıklanırsa
+                  }}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+    
 
       <div className="second-ads-container">
         {products.length === 0 ? (
@@ -253,10 +270,11 @@ function SecondHandItems() {
                 />
               </div>
               <div className="ad-details">
-                <div className="ad-title">{product.title}</div>
-                <div className="ad-price">{product.price} TL</div>
-                <div className="ad-description">{product.description}</div>
-              </div>
+  <div className="ad-title">{product.title}</div>
+  <div className="ad-price">{product.price} TL</div>
+  <div className="ad-description">{product.description}</div>
+</div>
+
             </div>
           ))
         )}

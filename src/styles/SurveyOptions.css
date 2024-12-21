@@ -1,0 +1,44 @@
+.survey-options-wrapper {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(to right, #dbeafe, #e0f7fa); /* Açık tonlar */
+  font-family: "Arial", sans-serif;
+}
+
+.left-side,
+.right-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.left-side {
+  background-color:linear-gradient(to bottom, #f0f9ff, #cfe9ff);
+  color: #4a4a4a; /* Daha koyu bir yazı rengi */
+}
+
+.right-side {
+  background-color: white; /* Açık mavi */
+  color: #4a4a4a; /* Daha koyu bir yazı rengi */
+}
+
+.survey-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.option-button {
+  width: 150px;
+  height: 50px;
+  font-size: 18px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.option-button:hover {
+  transform: scale(1.05);
+}

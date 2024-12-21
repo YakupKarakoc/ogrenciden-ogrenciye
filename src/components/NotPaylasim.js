@@ -1,46 +1,70 @@
-import React, { useState } from "react";
-import { Input, Button, Modal, Select, Upload } from "antd";
+import React, { useState, useEffect } from "react";
+import { Input, Button, message } from "antd";
 import {
   UserOutlined,
   LogoutOutlined,
   PlusCircleOutlined,
   HeartFilled,
-  HeartOutlined,
-  UploadOutlined,
+  BookOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/NotPaylasim.css";
 
-const { TextArea } = Input;
-const { Option } = Select;
-
 function NotPaylasim() {
+  const [notes, setNotes] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); // Arama sorgusu için state
   const navigate = useNavigate();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isFavoritesModalOpen, setIsFavoritesModalOpen] = useState(false);
-  const [isNoteDetailModalOpen, setIsNoteDetailModalOpen] = useState(false);
-  const [trendNotes, setTrendNotes] = useState([]);
-  const [selectedNote, setSelectedNote] = useState(null);
-  const [favorites, setFavorites] = useState([]);
-  const [categories, setCategories] = useState([
-    "Matematik",
-    "Fizik",
-    "Kimya",
-    "Biyoloji",
-    "Tarih",
-  ]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [customCategory, setCustomCategory] = useState("");
-  const [newNote, setNewNote] = useState({
-    title: "",
-    description: "",
-    fullContent: "",
-    category: "",
-    photo: null,
-  });
+  const fetchUserNotes = async () => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      message.error("Kullanıcı bilgisi bulunamadı!");
+      return;
+    }
 
-  const maxTitleLength = 25;
+    try {
+      const response = await axios.get(`http://localhost:5181/api/Note/user/${userId}`);
+      setNotes(response.data);
+    } catch (error) {
+      console.error("Kullanıcı notları alınırken hata oluştu:", error);
+      message.error("Notları alırken bir hata oluştu.");
+    }
+  };
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const response = await axios.get("http://localhost:5181/api/Note");
+        setNotes(response.data);
+      } catch (error) {
+        console.error("Notları alırken hata oluştu:", error);
+      }
+    };
+    fetchNotes();
+  }, []);
+
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      message.error("Arama sorgusu boş olamaz.");
+      return;
+    }
+
+    try {
+      const response = await axios.get(
+        `http://localhost:5181/api/Note/search?query=${encodeURIComponent(searchQuery)}`
+      );
+      setNotes(response.data);
+    } catch (error) {
+      console.error("Arama sırasında hata oluştu:", error);
+      message.error("Arama sırasında bir hata oluştu.");
+    }
+  };
+
+  const handleAddToFavorites = (noteId) => {
+    console.log(`Note ${noteId} favorilere eklendi!`);
+    // Favorilere ekleme API çağrısını buraya ekleyebilirsiniz.
+  };
 
   const handleLogoClick = () => {
     navigate("/home");
@@ -55,76 +79,13 @@ function NotPaylasim() {
     navigate("/login");
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  const handleMyNotesClick = () => {
+    navigate("/mynotes");
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedCategory("");
-    setCustomCategory("");
-    setNewNote({ title: "", description: "", fullContent: "", category: "", photo: null });
+  const handleAddNoteClick = () => {
+    navigate("/AddNote");
   };
-
-  const openFavoritesModal = () => {
-    setIsFavoritesModalOpen(true);
-  };
-
-  const closeFavoritesModal = () => {
-    setIsFavoritesModalOpen(false);
-  };
-
-  const openNoteDetail = (note) => {
-    setSelectedNote(note);
-    setIsNoteDetailModalOpen(true);
-  };
-
-  const closeNoteDetail = () => {
-    setIsNoteDetailModalOpen(false);
-    setSelectedNote(null);
-  };
-
-  const handleCategoryChange = (value) => {
-    setSelectedCategory(value);
-    setNewNote((prev) => ({
-      ...prev,
-      category: value === "Diğer" ? customCategory : value,
-    }));
-  };
-
-  const handleFileChange = (info) => {
-    if (info.file.status === "done") {
-      setNewNote((prev) => ({ ...prev, photo: info.file.originFileObj }));
-    }
-  };
-
-  const handleSaveNote = () => {
-    if (selectedCategory === "Diğer" && customCategory) {
-      setCategories((prev) => [...prev, customCategory]);
-    }
-
-    const noteToAdd = {
-      id: trendNotes.length + 1,
-      title: newNote.title,
-      description: newNote.description,
-      fullContent: newNote.fullContent,
-      category: selectedCategory === "Diğer" ? customCategory : selectedCategory,
-      photo: newNote.photo,
-    };
-
-    setTrendNotes((prev) => [noteToAdd, ...prev]);
-    closeModal();
-  };
-
-  const toggleFavorite = (id) => {
-    if (favorites.includes(id)) {
-      setFavorites(favorites.filter((favId) => favId !== id));
-    } else {
-      setFavorites([...favorites, id]);
-    }
-  };
-
-  const favoriteNotes = trendNotes.filter((note) => favorites.includes(note.id));
 
   return (
     <div className="not-paylasim-wrapper">
@@ -139,17 +100,23 @@ function NotPaylasim() {
           />
           <span className="logo-text">Öğrenciden Öğrenciye</span>
           <Input
-            placeholder="Aranacak notu yazınız"
+            placeholder="Aranacak dersi veya notu yazınız.."
             className="search-input"
             allowClear
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onPressEnter={handleSearch} // Enter tuşuna basıldığında ara
           />
+          <Button className="araara" type="primary" onClick={handleSearch}>
+            Ara
+          </Button>
         </div>
         <div className="header-right">
           <Button
             type="text"
             icon={<PlusCircleOutlined />}
             className="header-button"
-            onClick={openModal}
+            onClick={handleAddNoteClick}
           >
             Not Ekle
           </Button>
@@ -157,9 +124,16 @@ function NotPaylasim() {
             type="text"
             icon={<HeartFilled />}
             className="header-button"
-            onClick={openFavoritesModal}
           >
-            Favorilerim
+            Çalışılacaklar
+          </Button>
+          <Button
+            type="text"
+            icon={<BookOutlined />}
+            className="header-button"
+            onClick={handleMyNotesClick}
+          >
+            Notlarım
           </Button>
           <Button
             type="text"
@@ -180,161 +154,31 @@ function NotPaylasim() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <div className="not-paylasim-content">
-        <aside className="sidebar">
-          <h3>Dersler</h3>
-          <ul>
-            {categories.map((category, index) => (
-              <li key={index}>{category}</li>
-            ))}
-          </ul>
-        </aside>
-
-        <section className="trend-notlar-section">
-          <h3>
-            Trend Notlar <span className="emoji">🔥</span>
-          </h3>
-          <div className="trend-notes-list">
-            {trendNotes.map((note) => (
-              <div
-                key={note.id}
-                className="note-card"
-                onClick={() => openNoteDetail(note)}
+      {/* Notes Section */}
+      <div className="notes-grid">
+        {notes.map((note) => (
+          <div key={note.noteId} className="note-card">
+            <h3>{note.subject}</h3>
+            <p>{note.content}</p>
+            {note.filePath && (
+              <a
+                href={`http://localhost:5181${note.filePath}`}
+                target="_blank"
+                rel="noreferrer"
               >
-                <h3>{note.title}</h3>
-                <p>{note.description}</p>
-                {note.photo && <img src={URL.createObjectURL(note.photo)} alt="Note" className="note-image" />}
-                <span className="note-category">{note.category}</span>
-                {favorites.includes(note.id) ? (
-                  <HeartFilled
-                    className="favorite-icon favorited"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleFavorite(note.id);
-                    }}
-                  />
-                ) : (
-                  <HeartOutlined
-                    className="favorite-icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleFavorite(note.id);
-                    }}
-                  />
-                )}
-              </div>
-            ))}
+                Notu Görmek İster misin?
+              </a>
+            )}
+            <span className="note-uploader">Hazırlayan: {note.uploaderName}</span>
+            <button
+              className="favorite-button"
+              onClick={() => handleAddToFavorites(note.noteId)}
+            >
+              Çalışılacaklara Ekle
+            </button>
           </div>
-        </section>
+        ))}
       </div>
-
-      {/* Add Note Modal */}
-      <Modal
-        title="Yeni Not Ekle"
-        visible={isModalOpen}
-        onCancel={closeModal}
-        footer={null}
-      >
-        <form className="note-form">
-          <label>Ders Seçiniz:</label>
-          <Select
-            placeholder="Bir ders seçin"
-            className="note-select"
-            onChange={handleCategoryChange}
-            value={selectedCategory}
-          >
-            {categories.map((category, index) => (
-              <Option key={index} value={category}>
-                {category}
-              </Option>
-            ))}
-            <Option value="Diğer">Diğer</Option>
-          </Select>
-
-          {selectedCategory === "Diğer" && (
-            <>
-              <label>Yeni Ders Adı:</label>
-              <Input
-                placeholder="Ders adını girin"
-                className="note-input"
-                value={customCategory}
-                onChange={(e) => setCustomCategory(e.target.value)}
-              />
-            </>
-          )}
-
-          <label>Not Başlığı (Max {maxTitleLength} karakter):</label>
-          <Input
-            placeholder="Not başlığını girin"
-            className="note-input"
-            value={newNote.title}
-            onChange={(e) =>
-              e.target.value.length <= maxTitleLength &&
-              setNewNote((prev) => ({ ...prev, title: e.target.value }))
-            }
-          />
-          <p>
-            {newNote.title.length}/{maxTitleLength} karakter
-          </p>
-
-          <label>Not Açıklaması:</label>
-          <Input
-            placeholder="Kısa bir açıklama yazın"
-            className="note-input"
-            value={newNote.description}
-            onChange={(e) =>
-              setNewNote((prev) => ({ ...prev, description: e.target.value }))
-            }
-          />
-
-          <label>Detaylı Not:</label>
-          <TextArea
-            placeholder="Detaylı notunuzu buraya yazın"
-            rows={4}
-            className="note-textarea"
-            value={newNote.fullContent}
-            onChange={(e) =>
-              setNewNote((prev) => ({ ...prev, fullContent: e.target.value }))
-            }
-          />
-
-          <label>Fotoğraf Yükle:</label>
-          <Upload
-            accept="image/*"
-            maxCount={1}
-            beforeUpload={() => false}
-            onChange={handleFileChange}
-          >
-            <Button icon={<UploadOutlined />}>Fotoğraf Seç</Button>
-          </Upload>
-
-          <Button
-            type="primary"
-            className="save-note-button"
-            onClick={handleSaveNote}
-          >
-            Kaydet
-          </Button>
-        </form>
-      </Modal>
-
-      {/* Note Detail Modal */}
-      <Modal
-        title={selectedNote?.title || "Detaylı Not"}
-        visible={isNoteDetailModalOpen}
-        onCancel={closeNoteDetail}
-        footer={null}
-      >
-        <p>{selectedNote?.fullContent}</p>
-        {selectedNote?.photo && (
-          <img
-            src={URL.createObjectURL(selectedNote.photo)}
-            alt="Note"
-            className="note-detail-image"
-          />
-        )}
-      </Modal>
     </div>
   );
 }

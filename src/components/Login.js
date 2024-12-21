@@ -14,24 +14,25 @@ function Login() {
       message.error("Lütfen geçerli bir .edu.tr uzantılı e-posta adresi girin!");
       return;
     }
-
+  
     if (!email || !password) {
       message.error("Lütfen e-posta ve şifrenizi girin!");
       return;
     }
-
+  
     try {
       const response = await axios.post(
         "http://localhost:5181/api/Auth/login",
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );
-
+  
       if (response.data.success) {
         message.success("Başarıyla giriş yapıldı!");
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userEmail", email);
-        localStorage.setItem("userName", response.data.name); // Kullanıcının adını kaydediyoruz
+        localStorage.setItem("userId", response.data.userId); // userId düzgün şekilde ekleniyor
+        localStorage.setItem("userName", response.data.name);
         navigate("/home");
       } else {
         message.error("Kullanıcı adı veya şifre hatalı!");
@@ -44,6 +45,7 @@ function Login() {
       }
     }
   };
+  
 
   return (
     <div className="login-page">

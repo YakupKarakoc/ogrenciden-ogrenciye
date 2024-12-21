@@ -1,5 +1,11 @@
 /* Profile.css */
 
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f8ff; /* Üstteki renk ile aynı */
+}
+
 .profile-container {
   display: flex;
   flex-direction: column;
@@ -7,12 +13,10 @@
   max-width: 600px;
   margin: 0 auto;
   padding: 30px;
-  height: 105vh;
-  background-color: rgba(255, 255, 255, 0.85);
+  height: auto; /* Dinamik yükseklik */
+  background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  font-family: 'Roboto', sans-serif;
-  overflow: hidden;
 }
 
 .profile-header {
@@ -49,7 +53,8 @@
   display: block;
 }
 
-.profile-info p, .profile-info input {
+.profile-info p,
+.profile-info input {
   font-size: 1rem;
   color: #666;
   width: 100%;
@@ -71,7 +76,9 @@
   gap: 15px;
 }
 
-.edit-button, .save-button, .cancel-button {
+.edit-button,
+.save-button,
+.cancel-button {
   padding: 10px 20px;
   font-size: 1rem;
   border: none;
@@ -94,6 +101,8 @@
   color: #ffffff;
 }
 
-.edit-button:hover, .save-button:hover, .cancel-button:hover {
+.edit-button:hover,
+.save-button:hover,
+.cancel-button:hover {
   opacity: 0.9;
 }

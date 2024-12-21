@@ -11,10 +11,11 @@ import axios from "axios";
 import "../styles/ProductDetail.css";
 
 function ProductDetail() {
-  const { id } = useParams();
+  const { id } = useParams(); // URL'deki ürün ID'sini al
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
 
+  // Ürün detaylarını çek
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -117,13 +118,12 @@ function ProductDetail() {
             </p>
           </div>
           <Button
-          type="primary"
-          className="contact-seller-button"
-          onClick={() => navigate(`/messages/${product.sellerId}`)}
-        >
-          Satıcıyla İletişime Geç
-        </Button>
-
+            type="primary"
+            className="contact-seller-button"
+            onClick={() => navigate(`/messages/${product.sellerId}`)}
+          >
+            Satıcıyla İletişime Geç
+          </Button>
         </div>
       </div>
     </div>

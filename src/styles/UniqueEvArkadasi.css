@@ -1,0 +1,103 @@
+.unique-evarkadasi-wrapper {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #f0f9ff, #cfe9ff);
+  min-height: 100vh;
+  padding-top: 80px; /* Adjust to account for fixed header height */
+}
+
+.unique-evarkadasi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #4a90e2, #6bc1e9);
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.unique-logo-section {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.unique-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Makes the logo circular */
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.unique-logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.unique-header-middle {
+  flex-grow: 1;
+  margin: 0 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.unique-search-input {
+  width: 250px; /* Adjusted width for a smaller search bar */
+  border-radius: 20px; /* Rounded edges */
+  padding: 8px 12px;
+  font-size: 0.9rem; /* Reduced font size */
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.unique-header-right {
+  display: flex;
+  gap: 10px;
+}
+
+.unique-header-button {
+  font-size: 1rem;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.unique-header-button:hover {
+  background-color: white;
+  color: #4a90e2;
+  transform: scale(1.05);
+}
+
+.unique-ads-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px); /* Adjust for header height */
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.unique-account-menu {
+  background: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.unique-account-menu .ant-menu-item {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  color: #4a90e2;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.unique-account-menu .ant-menu-item:hover {
+  background-color: #f0f9ff;
+  color: #357ab8;
+}
