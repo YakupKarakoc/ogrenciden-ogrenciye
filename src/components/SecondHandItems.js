@@ -33,7 +33,7 @@ function SecondHandItems() {
       try {
         const userEmail = localStorage.getItem("userEmail");
         if (!userEmail) throw new Error("Kullanıcı e-posta adresi bulunamadı.");
-        const response = await axios.get("http://localhost:5181/api/Favorites", {
+        const response = await axios.get("http://localhost:5181/api/ProductFavorite", {
           params: { userEmail },
         });
         setFavorites(response.data.map((fav) => fav.product.productId));
@@ -41,8 +41,6 @@ function SecondHandItems() {
         message.error("Favoriler alınırken bir hata oluştu!");
       }
     };
-
-   
 
     const fetchProducts = async () => {
       try {
@@ -76,24 +74,22 @@ function SecondHandItems() {
       }
     }
   };
-
   const toggleFavorite = async (productId) => {
     const userEmail = localStorage.getItem("userEmail");
     if (!userEmail) {
       message.error("Kullanıcı e-posta adresi bulunamadı.");
       return;
     }
-
+  
     try {
       if (favorites.includes(productId)) {
-        await axios.delete(`http://localhost:5181/api/Favorites/${userEmail}/${productId}`);
+        await axios.delete(`http://localhost:5181/api/ProductFavorite/${userEmail}/${productId}`);
         setFavorites((prev) => prev.filter((id) => id !== productId));
         message.success("Favorilerden kaldırıldı!");
       } else {
-        await axios.post("http://localhost:5181/api/Favorites", {
+        await axios.post("http://localhost:5181/api/ProductFavorite", {
           userEmail,
-          itemId: productId,
-          itemType: "Product",
+          productId,
         });
         setFavorites((prev) => [...prev, productId]);
         message.success("Favorilere eklendi!");
@@ -102,6 +98,7 @@ function SecondHandItems() {
       message.error("Favori işlemi sırasında bir hata oluştu!");
     }
   };
+  
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -126,14 +123,12 @@ function SecondHandItems() {
 
   const categories = [
     { icon: "📚", title: "Ders Materyalleri", items: ["Ders Kitapları", "Kırtasiye Malzemeleri"] },
-    { icon: "💻", title: "Elektronik", items: ["Telefonlar", "Bilgisayar&Tablet&TV","Beyaz Eşya","Elektronik Gereçler"] },
+    { icon: "💻", title: "Elektronik", items: ["Telefonlar", "Bilgisayar&Tablet&TV", "Beyaz Eşya", "Elektronik Gereçler"] },
     { icon: "🛋️", title: "Ev ve Mobilya", items: ["Ev Gereçleri", "Mobilya"] },
     { icon: "👗", title: "Giyim ve Moda", items: ["Kadın Kıyafetleri", "Erkek Kıyafetleri"] },
     { icon: "🎮", title: "Spor ve Hobi", items: ["Spor Ekipmanları", "Müzik Aletleri"] },
     { icon: "📦", title: "Kozmetik", items: ["Parfüm&Deodorant", "Kişisel Bakım"] },
     { icon: "📦", title: "Diğer", items: ["Ayakkabı", "Çanta"] },
-
-  
   ];
 
   return (
@@ -141,9 +136,7 @@ function SecondHandItems() {
       <header className="second-hand-header">
         <div className="header-logo-section">
           <img src="/images/logo.jpg" alt="Logo" className="logo" onClick={() => navigate("/home")} />
-          <span className="header-logo-text" onClick={() => navigate("/home")}>
-            Öğrenciden Öğrenciye
-          </span>
+          <span className="header-logo-text" onClick={() => navigate("/home")}>Öğrenciden Öğrenciye</span>
           <Input
             placeholder="Aradığınız ürün, kategori veya markayı yazınız.."
             className="header-search-input"
@@ -206,34 +199,33 @@ function SecondHandItems() {
       </header>
 
       <div className="sidebar">
-      {categories.map((category, index) => (
-        <div
-          key={index}
-          className="category-card"
-          onClick={() => handleCategoryClick(category.title)} // Kategoriye tıklanırsa
-          onMouseEnter={() => setHoveredCategory(index)}
-          onMouseLeave={() => setHoveredCategory(null)}
-        >
-          <div className="category-icon">{category.icon}</div>
-          <h3 className="category-title">{category.title}</h3>
-          {hoveredCategory === index && (
-            <div className="category-dropdown">
-              <ul>
-                {category.items.map((item, idx) => (
-                  <li key={idx} onClick={(e) => { 
-                    e.stopPropagation(); // Ana kategoriye tıklamayı engelle
-                    handleCategoryClick(category.title, item); // Alt kategoriye tıklanırsa
-                  }}>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      ))}
-    </div>
-    
+        {categories.map((category, index) => (
+          <div
+            key={index}
+            className="category-card"
+            onClick={() => handleCategoryClick(category.title)}
+            onMouseEnter={() => setHoveredCategory(index)}
+            onMouseLeave={() => setHoveredCategory(null)}
+          >
+            <div className="category-icon">{category.icon}</div>
+            <h3 className="category-title">{category.title}</h3>
+            {hoveredCategory === index && (
+              <div className="category-dropdown">
+                <ul>
+                  {category.items.map((item, idx) => (
+                    <li key={idx} onClick={(e) => {
+                      e.stopPropagation();
+                      handleCategoryClick(category.title, item);
+                    }}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
 
       <div className="second-ads-container">
         {products.length === 0 ? (
@@ -270,11 +262,10 @@ function SecondHandItems() {
                 />
               </div>
               <div className="ad-details">
-  <div className="ad-title">{product.title}</div>
-  <div className="ad-price">{product.price} TL</div>
-  <div className="ad-description">{product.description}</div>
-</div>
-
+                <div className="ad-title">{product.title}</div>
+                <div className="ad-price">{product.price} TL</div>
+                <div className="ad-description">{product.description}</div>
+              </div>
             </div>
           ))
         )}

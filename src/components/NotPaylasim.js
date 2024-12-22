@@ -125,7 +125,7 @@ function NotPaylasim() {
             icon={<HeartFilled />}
             className="header-button"
           >
-            Çalışılacaklar
+            Favorilerim
           </Button>
           <Button
             type="text"

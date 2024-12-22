@@ -17,7 +17,7 @@ function Favorites() {
                     throw new Error("Kullanıcı e-posta adresi bulunamadı.");
                 }
 
-                const response = await axios.get(`http://localhost:5181/api/Favorites`, {
+                const response = await axios.get(`http://localhost:5181/api/ProductFavorite`, {
                     params: { userEmail },
                 });
                 setFavorites(response.data);
@@ -46,7 +46,7 @@ function Favorites() {
         }
 
         try {
-            await axios.delete(`http://localhost:5181/api/Favorites/${userEmail}/${productId}`);
+            await axios.delete(`http://localhost:5181/api/ProductFavorite/${userEmail}/${productId}`);
             setFavorites((prev) => prev.filter((fav) => fav.product.productId !== productId));
             message.success("Favorilerden kaldırıldı!");
         } catch (error) {
@@ -112,9 +112,7 @@ function Favorites() {
                                 <h3 className="favorite-title">{fav.product.title}</h3>
                                 <p className="favorite-price">{fav.product.price} TL</p>
                                 <p className="favorite-description">{fav.product.description}</p>
-                                <p className="favorite-seller">
-                                    Satıcı: {fav.product.sellerName}
-                                </p>
+                                <p className="favorite-seller">Satıcı: {fav.product.sellerName}</p>
                             </div>
                         </div>
                     ))

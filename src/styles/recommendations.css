@@ -1,0 +1,65 @@
+.recommendations-wrapper p {
+  font-size: 1.2rem;
+  margin: 20px 0;
+}
+.recommendations-wrapper p[style*="color: red"] {
+  color: red;
+  font-weight: bold;
+}
+
+.recommendations-wrapper h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #4a90e2;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.ads-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
+
+.ads-container .ant-card {
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ads-container .ant-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ant-card-cover img {
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd;
+}
+
+.ant-card-meta-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.ant-card-meta-description {
+  font-size: 1rem;
+  color: #666;
+}
+
+.error-message {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #e74c3c;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .ads-container {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}

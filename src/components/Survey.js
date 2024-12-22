@@ -22,7 +22,7 @@ function Survey({ userId }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Kullanıcının önceki cevaplarını getir veya default değerleri ayarla
+    // Varsayılan değerleri koruyarak kullanıcı verilerini yükle
     fetch(`/api/usersurvey/${userId}`)
       .then((res) => {
         if (!res.ok) {
@@ -32,25 +32,27 @@ function Survey({ userId }) {
       })
       .then((data) => {
         if (data) {
-          setAnswers({
-            question1: data.question1 || 3,
-            question2: data.question2 || 3,
-            question3: data.question3 || 3,
-            question4: data.question4 || 3,
-            question5: data.question5 || 3,
-            question6: data.question6 || 3,
-            question7: data.question7 || 3,
-            question8: data.question8 || 3,
-            question9: data.question9 || 3,
-            question10: data.question10 || 3,
-          });
+          setAnswers((prevAnswers) => ({
+            ...prevAnswers,
+            question1: data.question1 ?? 3,
+            question2: data.question2 ?? 3,
+            question3: data.question3 ?? 3,
+            question4: data.question4 ?? 3,
+            question5: data.question5 ?? 3,
+            question6: data.question6 ?? 3,
+            question7: data.question7 ?? 3,
+            question8: data.question8 ?? 3,
+            question9: data.question9 ?? 3,
+            question10: data.question10 ?? 3,
+          }));
         }
       })
       .catch((error) => {
         console.error("Anket yükleme hatası:", error);
-        message.error("Anket yüklenirken bir hata oluştu. Varsayılan değerler ayarlandı.");
+        message.error("Anket yüklenirken bir hata oluştu. Varsayılan değerler korundu.");
       });
   }, [userId]);
+  
 
   const handleSliderChange = (value, question) => {
     setAnswers((prev) => ({ ...prev, [question]: value }));

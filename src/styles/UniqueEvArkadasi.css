@@ -1,8 +1,8 @@
 .unique-evarkadasi-wrapper {
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #f0f9ff, #cfe9ff);
+  background: #f9f9f9;
   min-height: 100vh;
-  padding-top: 80px; /* Adjust to account for fixed header height */
+  padding-top: 80px;
 }
 
 .unique-evarkadasi-header {
@@ -17,7 +17,6 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .unique-logo-section {
@@ -29,7 +28,7 @@
 .unique-logo {
   width: 50px;
   height: 50px;
-  border-radius: 50%; /* Makes the logo circular */
+  border-radius: 50%;
   object-fit: cover;
   margin-right: 10px;
 }
@@ -37,22 +36,6 @@
 .unique-logo-text {
   font-size: 1.5rem;
   font-weight: bold;
-}
-
-.unique-header-middle {
-  flex-grow: 1;
-  margin: 0 20px;
-  display: flex;
-  justify-content: center;
-}
-
-.unique-search-input {
-  width: 250px; /* Adjusted width for a smaller search bar */
-  border-radius: 20px; /* Rounded edges */
-  padding: 8px 12px;
-  font-size: 0.9rem; /* Reduced font size */
-  border: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .unique-header-right {
@@ -75,29 +58,162 @@
   transform: scale(1.05);
 }
 
-.unique-ads-container {
+.unique-evarkadasi-content {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 80px); /* Adjust for header height */
-  font-size: 1.2rem;
-  color: #666;
+  padding: 20px;
+  margin-top: 20px;
 }
 
-.unique-account-menu {
+.filter-section {
+  width: 20%;
   background: white;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.unique-account-menu .ant-menu-item {
-  padding: 10px 20px;
-  font-size: 0.9rem;
+.filter-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
   color: #4a90e2;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: bold;
 }
 
-.unique-account-menu .ant-menu-item:hover {
-  background-color: #f0f9ff;
-  color: #357ab8;
+.filter-section .ant-input,
+.filter-section .ant-select {
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  color: #333;
+}
+
+.filter-section .ant-select-selection-placeholder {
+  color: #4a90e2 !important;
+  font-weight: bold !important;
+  font-size: 1rem !important;
+}
+
+
+
+.filter-section .ant-input::placeholder,
+.filter-section .ant-select-selection-placeholder {
+  color: #666 !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+}
+
+.filter-section .ant-btn {
+  width: 100%;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  font-size: 1rem;
+}
+
+.filter-section .ant-btn:hover {
+  background: #357ab8;
+}
+
+.ads-section {
+  width: 80%;
+  margin-left: 20px;
+}
+
+.ads-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 1rem;
+}
+
+.ads-table thead tr {
+  background: #4a90e2;
+  color: white;
+}
+
+.ads-table th,
+.ads-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.ads-table th {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.ads-table tr:hover {
+  background: #f1f1f1;
+}
+
+.ad-title-cell {
+  display: flex;
+  align-items: center;
+}
+
+.ad-thumbnail {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.ad-title-cell span {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #4a90e2;
+}
+
+.ads-table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ads-table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.ads-table td {
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.ads-table td:last-child {
+  color: #4a90e2;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .unique-evarkadasi-content {
+    flex-direction: column;
+  }
+
+  .filter-section {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .ads-section {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+.filter-section .ant-select-single .ant-select-selection-placeholder {
+  color: #4a90e2 !important;
+  font-size: 1rem !important;
+  font-weight: bold !important;
+}
+
+.filter-section .ant-select {
+  border: 1px solid #4a90e2 !important;
+  border-radius: 5px !important;
+}
+
+.filter-section .ant-select-focused {
+  border-color: #357ab8 !important;
+  box-shadow: 0 0 5px rgba(53, 122, 184, 0.5);
 }
