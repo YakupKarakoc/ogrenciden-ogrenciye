@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Input, Button } from "antd";
-import {
-  UserOutlined,
-  LogoutOutlined,
-  PlusCircleOutlined,
-  HeartFilled,
-  BookOutlined,
-} from "@ant-design/icons";
+import { PlusCircleOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../../styles/lectureNotess/MyNotes.css";
+import "../../styles/lectureNotess/MyNotesUnique.css";
 
 function MyNotes() {
   const [userNotes, setUserNotes] = useState([]);
@@ -49,39 +43,31 @@ function MyNotes() {
   };
 
   return (
-    <div className="my-notes-updated-wrapper">
+    <div className="my-notes-container-unique">
       {/* Header */}
-      <header className="my-notes-updated-header">
-        <div className="my-notes-updated-logo-section">
+      <header className="my-notes-header-unique">
+        <div className="my-notes-logo-section-unique">
           <img
             src="/images/logo.jpg"
             alt="Logo"
-            className="my-notes-updated-logo"
+            className="my-notes-logo-unique"
             onClick={handleLogoClick}
           />
-          <span className="my-notes-updated-logo-text">Öğrenciden Öğrenciye</span>
+          <span className="my-notes-logo-text-unique">Öğrenciden Öğrenciye</span>
         </div>
-        <div className="my-notes-updated-header-right">
+        <div className="my-notes-header-right-unique">
           <Button
             type="text"
             icon={<PlusCircleOutlined />}
-            className="my-notes-updated-header-button"
+            className="my-notes-header-button-unique"
             onClick={handleAddNoteClick}
           >
             Not Ekle
           </Button>
           <Button
             type="text"
-            icon={<HeartFilled />}
-            className="my-notes-updated-header-button"
-          >
-            Çalışılacaklar
-          </Button>
-         
-          <Button
-            type="text"
             icon={<UserOutlined />}
-            className="my-notes-updated-header-button"
+            className="my-notes-header-button-unique"
             onClick={handleProfileClick}
           >
             Profilim
@@ -89,7 +75,7 @@ function MyNotes() {
           <Button
             type="text"
             icon={<LogoutOutlined />}
-            className="my-notes-updated-header-button"
+            className="my-notes-header-button-unique"
             onClick={handleLogoutClick}
           >
             Çıkış
@@ -98,18 +84,19 @@ function MyNotes() {
       </header>
 
       {/* User Notes Section */}
-      <div className="my-notes-updated-container">
-        <h1>Notlarım</h1>
-        <div className="my-notes-updated-grid">
+      <div className="my-notes-content-unique">
+        <h1 className="my-notes-title-unique">Notlarım</h1>
+        <div className="my-notes-grid-unique">
           {userNotes.map((note) => (
-            <div key={note.noteId} className="my-notes-updated-card">
-              <h3>{note.subject}</h3>
-              <p>{note.content}</p>
+            <div key={note.noteId} className="my-notes-card-unique">
+              <h3 className="my-notes-card-title-unique">{note.subject}</h3>
+              <p className="my-notes-card-content-unique">{note.content}</p>
               {note.filePath && (
                 <a
                   href={`http://localhost:5181${note.filePath}`}
                   target="_blank"
                   rel="noreferrer"
+                  className="my-notes-card-link-unique"
                 >
                   PDF Görüntüle
                 </a>

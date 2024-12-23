@@ -20,7 +20,7 @@ import Recommendations from "./components/houseMate/Recommendations";
 import SurveyOptions from "./components/houseMate/SurveyOptions";
 import NewRoommateAd from './components/houseMate/NewRoommateAd';
 import EvIlaniDetayi from './components/houseMate/EvIlaniDetayi'; // Correct import
-
+import NoteFavoritePage from './components/lectureNotes/NoteFavoritePage';
 
 function App() {
   const currentUserId = localStorage.getItem("userId"); // or context-based
@@ -43,12 +43,13 @@ function App() {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/my-ads" element={<MyAds />} />
         <Route path="/AddNote" element={<AddNote />} />
-        <Route path="/mynotes" element={<MyNotes />} />
+        <Route path="/my-notes" element={<MyNotes />} />
         <Route path="/survey-options" element={<SurveyOptions />} />
         <Route path="/survey" element={<Survey userId={currentUserId} />} />
         <Route path="/recommendations" element={<Recommendations userId={currentUserId} />} />
         <Route path="/newroommatead" element={<NewRoommateAd />} />
         <Route path="/roommatead/:id" element={<EvIlaniDetayi />} /> {/* Correctly mapped */}
+        <Route path='/note-favorite-page' element={<NoteFavoritePage/>}></Route>
         
 
       </Routes>

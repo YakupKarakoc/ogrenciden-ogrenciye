@@ -3,23 +3,23 @@ import { Form, Input, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../../styles/lectureNotess/AddNote.css";
+import "../../styles/lectureNotess/AddNoteUnique.css";
 
 function AddNote() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const [file, setFile] = useState(null); // Sadece dosya verisi için state
+  const [file, setFile] = useState(null); // Yüklenen dosya için state
   const uploaderId = localStorage.getItem("userId");
   const uploaderEmail = localStorage.getItem("userEmail");
 
-  // Form gönderme işlemi
+  // Form gönderimi
   const handleFormSubmit = async (values) => {
     const formData = new FormData();
     formData.append("UploaderId", uploaderId);
     formData.append("Subject", values.courseName);
     formData.append("Content", values.description);
     if (file) {
-      formData.append("File", file); // Doğrudan dosyayı ekliyoruz
+      formData.append("File", file);
     } else {
       message.error("Lütfen bir dosya yükleyin!");
       return;
@@ -45,24 +45,24 @@ function AddNote() {
   // Dosya yükleme işlemi
   const handleFileChange = (info) => {
     if (info.fileList.length > 0) {
-      setFile(info.fileList[0].originFileObj); // Doğrudan dosyayı state'e ekliyoruz
+      setFile(info.fileList[0].originFileObj);
     } else {
-      setFile(null); // Dosya yükleme iptal edilirse state'i temizliyoruz
+      setFile(null);
     }
   };
 
   return (
-    <div className="add-note-wrapper">
-      <h1>Yeni Not Ekle</h1>
+    <div className="add-note-container-unique">
+      <h1 className="add-note-title-unique">Yeni Not Ekle</h1>
       <Form
         form={form}
         layout="vertical"
-        className="add-note-form"
+        className="add-note-form-unique"
         onFinish={handleFormSubmit}
       >
         {/* Notu Ekleyen */}
         <Form.Item label="Notu Ekleyen">
-          <Input value={uploaderEmail} disabled className="input-disabled" />
+          <Input value={uploaderEmail} disabled className="add-note-input-disabled-unique" />
         </Form.Item>
 
         {/* Ders Adı */}
@@ -71,7 +71,10 @@ function AddNote() {
           name="courseName"
           rules={[{ required: true, message: "Ders adı gereklidir!" }]}
         >
-          <Input placeholder="Ders adını giriniz" />
+          <Input
+            placeholder="Ders adını giriniz"
+            className="add-note-input-unique"
+          />
         </Form.Item>
 
         {/* Not Açıklaması */}
@@ -80,7 +83,11 @@ function AddNote() {
           name="description"
           rules={[{ required: true, message: "Açıklama gereklidir!" }]}
         >
-          <Input.TextArea rows={4} placeholder="Kısa bir açıklama giriniz" />
+          <Input.TextArea
+            rows={4}
+            placeholder="Kısa bir açıklama giriniz"
+            className="add-note-textarea-unique"
+          />
         </Form.Item>
 
         {/* Dosya Yükleme */}
@@ -92,15 +99,25 @@ function AddNote() {
           <Upload
             accept=".pdf"
             maxCount={1}
-            beforeUpload={() => false} // Dosya yükleme işlemini manuel yapıyoruz
-            onChange={handleFileChange} // Dosya değişimini işliyoruz
+            beforeUpload={() => false}
+            onChange={handleFileChange}
+            className="add-note-upload-unique"
           >
-            <Button icon={<UploadOutlined />}>PDF Yükle</Button>
+            <Button
+              icon={<UploadOutlined />}
+              className="add-note-upload-button-unique"
+            >
+              PDF Yükle
+            </Button>
           </Upload>
         </Form.Item>
 
         {/* Kaydet Butonu */}
-        <Button type="primary" htmlType="submit" className="submit-button">
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="add-note-submit-button-unique"
+        >
           Notu Kaydet
         </Button>
       </Form>

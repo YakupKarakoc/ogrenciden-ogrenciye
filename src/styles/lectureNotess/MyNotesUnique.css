@@ -1,0 +1,130 @@
+/* Genel Stil Ayarları */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to bottom, #f0f9ff, #cfe9ff);
+  min-height: 100vh;
+}
+
+/* Ana Kapsayıcı */
+.my-notes-container-unique {
+  padding-top: 100px; /* Header'ın yerleşimini düzenler */
+}
+
+/* Header */
+.my-notes-header-unique {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #4a90e2, #6bc1e9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.my-notes-logo-section-unique {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.my-notes-logo-unique {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.my-notes-logo-text-unique {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.my-notes-header-right-unique {
+  display: flex;
+  gap: 15px;
+}
+
+.my-notes-header-button-unique {
+  font-size: 1rem;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.my-notes-header-button-unique:hover {
+  background-color: white;
+  color: #4a90e2;
+  transform: scale(1.05);
+}
+
+/* Notlar Bölümü */
+.my-notes-content-unique {
+  padding: 10px 30px; /* Üst padding azaltıldı */
+}
+
+.my-notes-title-unique {
+  text-align: center;
+  font-size: 2rem;
+  color: #4a90e2;
+  margin-bottom: 20px;
+  margin-top: -20px; /* Başlığı yukarı taşımak için üst margin eklendi */
+}
+
+.my-notes-grid-unique {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.my-notes-card-unique {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.my-notes-card-unique:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.my-notes-card-title-unique {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.my-notes-card-content-unique {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.my-notes-card-link-unique {
+  display: block;
+  font-size: 0.9rem;
+  color: #4a90e2;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.my-notes-card-link-unique:hover {
+  color: #357ab8;
+}
