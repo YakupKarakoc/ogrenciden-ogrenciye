@@ -8,7 +8,7 @@ import {
   HeartOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
-import "../styles/ProductDetail.css";
+import "../../styles/secondHandItems/ProductDetailUnique.css";
 
 function ProductDetail() {
   const { id } = useParams(); // URL'deki ürün ID'sini al
@@ -44,23 +44,19 @@ function ProductDetail() {
   };
 
   return (
-    <div className="product-detail-wrapper">
+    <div className="product-detail-unique-wrapper">
       {/* Header */}
-      <header className="product-detail-header">
-        <div className="logo-section" onClick={handleLogoClick}>
-          <img src="/images/logo.jpg" alt="Logo" className="logo" />
-          <span className="logo-text">Öğrenciden Öğrenciye</span>
-          <Input
-            placeholder="Aradığınız ürün, kategori veya markayı yazınız.."
-            className="search-input"
-            allowClear
-          />
+      <header className="product-detail-unique-header">
+        <div className="product-detail-unique-logo-section" onClick={handleLogoClick}>
+          <img src="/images/logo.jpg" alt="Logo" className="product-detail-unique-logo" />
+          <span className="product-detail-unique-logo-text">Öğrenciden Öğrenciye</span>
+         
         </div>
-        <div className="header-right">
+        <div className="product-detail-unique-header-right">
           <Button
             type="text"
             icon={<PlusCircleOutlined />}
-            className="header-button"
+            className="product-detail-unique-header-button"
             onClick={() => navigate("/new-ad")}
           >
             İlan Ver
@@ -68,7 +64,7 @@ function ProductDetail() {
           <Button
             type="text"
             icon={<HeartOutlined />}
-            className="header-button"
+            className="product-detail-unique-header-button"
             onClick={() => navigate("/favorites")}
           >
             Favorilerim
@@ -76,7 +72,7 @@ function ProductDetail() {
           <Button
             type="text"
             icon={<UserOutlined />}
-            className="header-button"
+            className="product-detail-unique-header-button"
             onClick={handleProfileClick}
           >
             Profilim
@@ -84,7 +80,7 @@ function ProductDetail() {
           <Button
             type="text"
             icon={<LogoutOutlined />}
-            className="header-button"
+            className="product-detail-unique-header-button"
             onClick={handleLogoutClick}
           >
             Çıkış
@@ -93,19 +89,19 @@ function ProductDetail() {
       </header>
 
       {/* Main Content */}
-      <div className="product-detail-content">
-        <div className="product-detail-left">
+      <div className="product-detail-unique-content">
+        <div className="product-detail-unique-left">
           <img
             src={`http://localhost:5181${product.imagePath}`}
             alt={product.title}
-            className="product-image"
+            className="product-detail-unique-image"
           />
         </div>
-        <div className="product-detail-right">
-          <h2 className="product-title">{product.title}</h2>
-          <p className="product-price">{product.price} TL</p>
-          <p className="product-description">{product.description}</p>
-          <div className="product-info">
+        <div className="product-detail-unique-right">
+          <h2 className="product-detail-unique-title">{product.title}</h2>
+          <p className="product-detail-unique-price">{product.price} TL</p>
+          <p className="product-detail-unique-description">{product.description}</p>
+          <div className="product-detail-unique-info">
             <p>
               <strong>Kategori:</strong> {product.category}
             </p>
@@ -119,7 +115,7 @@ function ProductDetail() {
           </div>
           <Button
             type="primary"
-            className="contact-seller-button"
+            className="product-detail-unique-contact-seller-button"
             onClick={() => navigate(`/messages/${product.sellerId}`)}
           >
             Satıcıyla İletişime Geç

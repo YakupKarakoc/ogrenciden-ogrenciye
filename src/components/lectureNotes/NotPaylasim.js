@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/NotPaylasim.css";
+import "../../styles/lectureNotess/NotPaylasim.css";
 
 function NotPaylasim() {
   const [notes, setNotes] = useState([]);

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Input, Button, message } from "antd";
 import { PlusCircleOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
-import "../styles/MyAds.css";
+import "../../styles/secondHandItems/ProductMyAds.css";
 
 function MyAds() {
   const [ads, setAds] = useState([]);
@@ -45,23 +45,23 @@ function MyAds() {
   };
 
   return (
-    <div className="my-ads-page">
+    <div className="product-my-ads-page">
       {/* Header */}
-      <header className="my-ads-header">
-        <div className="header-logo-section" onClick={() => navigate("/home")}>
-          <img src="/images/logo.jpg" alt="Logo" className="logo" />
-          <span className="header-logo-text">Öğrenciden Öğrenciye</span>
+      <header className="product-my-ads-header">
+        <div className="product-header-logo-section" onClick={() => navigate("/home")}>
+          <img src="/images/logo.jpg" alt="Logo" className="product-logo" />
+          <span className="product-header-logo-text">Öğrenciden Öğrenciye</span>
           <Input
-            placeholder="Aradığınız ürün, kategori veya markayı yazınız.."
-            className="header-search-input"
+            placeholder="İlanlarımda ara"
+            className="product-header-search-input"
             allowClear
           />
         </div>
-        <div className="header-buttons">
+        <div className="product-header-buttons">
           <Button
             type="text"
             icon={<PlusCircleOutlined />}
-            className="header-button"
+            className="product-header-button"
             onClick={handleNewAd}
           >
             İlan Ver
@@ -69,7 +69,7 @@ function MyAds() {
           <Button
             type="text"
             icon={<UserOutlined />}
-            className="header-button"
+            className="product-header-button"
             onClick={handleProfile}
           >
             Hesabım
@@ -77,7 +77,7 @@ function MyAds() {
           <Button
             type="text"
             icon={<LogoutOutlined />}
-            className="header-button"
+            className="product-header-button"
             onClick={handleLogout}
           >
             Çıkış
@@ -86,21 +86,25 @@ function MyAds() {
       </header>
 
       {/* Main Content */}
-      <h1 className="my-ads-title">İlanlarım</h1>
-      <div className="ads-container">
+      <h1 className="product-my-ads-title">İlanlarım</h1>
+      <div className="product-ads-container">
         {ads.length === 0 ? (
           <p>Henüz bir ilan vermediniz.</p>
         ) : (
           ads.map((ad) => (
             <div
               key={ad.productId}
-              className="ad-card"
+              className="product-ad-card"
               onClick={() => handleAdClick(ad.productId)}
             >
-              <img src={`http://localhost:5181${ad.imagePath}`} alt={ad.title} />
-              <h3>{ad.title}</h3>
-              <p>{ad.price} TL</p>
-              <p>{ad.description}</p>
+              <div className="product-ad-image-container">
+                <img src={`http://localhost:5181${ad.imagePath}`} alt={ad.title} />
+              </div>
+              <div className="product-ad-details">
+                <h3>{ad.title}</h3>
+                <p>{ad.price} TL</p>
+                <p>{ad.description}</p>
+              </div>
             </div>
           ))
         )}

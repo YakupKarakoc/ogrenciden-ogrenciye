@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, message } from "antd";
-import "../styles/recommendations.css";
+import "../../styles/houseMates/recommendations.css";
 
 const { Meta } = Card;
 

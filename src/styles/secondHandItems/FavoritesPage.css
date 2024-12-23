@@ -1,4 +1,4 @@
-.favorites-page {
+.favorites-page-wrapper {
   background-color: #f0f8ff;
   min-height: 100vh;
   display: flex;
@@ -7,7 +7,7 @@
 }
 
 /* Header */
-.favorites-header {
+.favorites-page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,13 +21,13 @@
   z-index: 10;
 }
 
-.header-logo-section {
+.favorites-header-logo-section {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.logo {
+.favorites-logo {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -35,27 +35,27 @@
   margin-right: 10px;
 }
 
-.header-logo-text {
+.favorites-header-logo-text {
   font-size: 1.5rem;
   font-weight: bold;
   color: white;
 }
 
-.header-search-input {
-  width: 330px;
+.favorites-header-search-input {
+  width: 145px;
   border-radius: 8px;
   padding: 8px 10px;
   border: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-right:620px;
+  margin-right: 100px;
 }
 
-.header-buttons {
+.favorites-header-buttons {
   display: flex;
   gap: 15px;
 }
 
-.header-button {
+.favorites-header-button {
   font-size: 1rem;
   color: white;
   background: rgba(255, 255, 255, 0.2);
@@ -64,14 +64,14 @@
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.header-button:hover {
+.favorites-header-button:hover {
   background-color: white;
   color: #4a90e2;
   transform: scale(1.05);
 }
 
 /* Title */
-.favorites-title {
+.favorites-page-title {
   margin-top: 100px;
   font-size: 2rem;
   color: #333;
@@ -80,16 +80,16 @@
 }
 
 /* Favorites Grid */
-.favorites-container {
+.favorites-grid-container {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   width: 95%;
   margin: 0 auto;
 }
 
 /* Card */
-.favorite-card {
+.favorites-card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -101,11 +101,11 @@
   text-align: center;
 }
 
-.favorite-card:hover {
+.favorites-card:hover {
   transform: scale(1.05);
 }
 
-.favorite-icon {
+.favorites-card-icon {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -115,44 +115,42 @@
 }
 
 /* Image */
-.favorite-image-container {
-  width: 100%;
-  height: 180px;
-  text-align: center;
+.favorites-card-image-container {
+  max-width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center; /* Görselleri yatay merkezler */
+  align-items: center; /* Görselleri dikey merkezler */
 }
 
-.favorite-image {
-  width: 90%;
-  height: 90%;
-  object-fit: cover;
-  border-radius: 5px;
+.favorites-card-image {
+  width: auto;
+  height: 100%;
+  object-fit: contain; /* Görüntü tam olarak gösterilir */
+  object-position: center; /* Görüntü merkeze hizalanır */
+  border-radius: 8px;
 }
 
 /* Details */
-.favorite-details {
+.favorites-card-details {
   margin-top: 10px;
 }
 
-.favorite-title {
+.favorites-card-title {
   font-size: 1rem;
   font-weight: bold;
   color: #333;
 }
 
-.favorite-price {
+.favorites-card-price {
   font-size: 1.2rem;
   font-weight: bold;
   color: #4a90e2;
   margin: 5px 0;
 }
 
-.favorite-description {
+.favorites-card-description {
   font-size: 0.9rem;
   color: #666;
   margin-bottom: 5px;
-}
-
-.favorite-seller {
-  font-size: 0.9rem;
-  color: #666;
 }

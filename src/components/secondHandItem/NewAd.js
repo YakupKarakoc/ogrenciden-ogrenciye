@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Input, Button, Select, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/NewAd.css";
+import "../../styles/secondHandItems/NewAd.css";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -21,16 +21,12 @@ function NewAd() {
   const sellerEmail = localStorage.getItem("userEmail");
   const sellerId = localStorage.getItem("sellerId");
 
-  
-
   useEffect(() => {
     if (!sellerEmail) {
       message.error("Lütfen giriş yapın.");
       navigate("/login");
     }
   }, [navigate, sellerEmail]);
-  
-  
 
   const handleFormSubmit = async () => {
     if (!category || !title || !price) {
@@ -83,8 +79,8 @@ function NewAd() {
   };
 
   return (
-    <div className="new-ad-page">
-      <div className="form-container">
+    <div className="newad-page">
+      <div className="newad-form-container">
         <h2>İlan Ver</h2>
         <Form layout="vertical" form={form} onFinish={handleFormSubmit}>
           <Form.Item label="Satıcı">
@@ -108,68 +104,57 @@ function NewAd() {
           </Form.Item>
 
           <Form.Item label="Alt Kategori">
-  <Select
-    placeholder="Alt Kategori Seçiniz"
-    onChange={(value) => setSubCategory(value)}
-    value={subCategory}
-  >
-    {category === "Ders Materyalleri" && (
-      <>
-        <Option value="Ders Kitapları">Ders Kitapları</Option>
-        <Option value="Kırtasiye Malzemeleri">Kırtasiye Malzemeleri</Option>
-      </>
-    )}
-     {category === "Elektronik" && (
-      <>
-        <Option value="Telefonlar">Telefonlar</Option>
-        <Option value="Bilgisayar&Tablet&TV">Bilgisayar&Tablet&TV</Option>
-        <Option value="Beyaz Eşya">Beyaz Eşya</Option>
-        <Option value="Elektronik Gereçler">Elektronik Gereçler</Option>
-      </>
-    )}
-
-      {category === "Ev ve Mobilya" && (
-      <>
-        <Option value="Ev Gereçleri">Ev Gereçleri</Option>
-        <Option value="Mobilya">Mobilya</Option>
-        
-      </>
-    )}
-
-      {category === "Giyim ve Moda" && (
-      <>
-        <Option value="Kadın Kıyafetleri">Kadın Kıyafetleri</Option>
-        <Option value="Erkek Kıyafetleri">Erkek Kıyafetleri</Option>
-       
-      </>
-    )}
-
-      {category === "Spor ve Hobi" && (
-      <>
-        <Option value="Spor Ekipmanları">Spor Ekipmanları</Option>
-        <Option value="Müzik Aletleri">Müzik Aletleri</Option>
-        
-      </>
-    )}
-
-      {category === "Kozmetik" && (
-      <>
-        <Option value="Parfüm&Deodorant">Parfüm&Deodorant</Option>
-        <Option value="Kişisel Bakım">Kişisel Bakım</Option>
-        
-      </>
-    )}
-
-      {category === "Diğer" && (
-      <>
-        <Option value="Ayakkabı">Ayakkabı</Option>
-        <Option value="Çanta">Çanta</Option>
-        
-      </>
-    )}
-
-  </Select>
-</Form.Item>
+            <Select
+              placeholder="Alt Kategori Seçiniz"
+              onChange={(value) => setSubCategory(value)}
+              value={subCategory}
+            >
+              {category === "Ders Materyalleri" && (
+                <>
+                  <Option value="Ders Kitapları">Ders Kitapları</Option>
+                  <Option value="Kırtasiye Malzemeleri">Kırtasiye Malzemeleri</Option>
+                </>
+              )}
+              {category === "Elektronik" && (
+                <>
+                  <Option value="Telefonlar">Telefonlar</Option>
+                  <Option value="Bilgisayar&Tablet&TV">Bilgisayar&Tablet&TV</Option>
+                  <Option value="Beyaz Eşya">Beyaz Eşya</Option>
+                  <Option value="Elektronik Gereçler">Elektronik Gereçler</Option>
+                </>
+              )}
+              {category === "Ev ve Mobilya" && (
+                <>
+                  <Option value="Ev Gereçleri">Ev Gereçleri</Option>
+                  <Option value="Mobilya">Mobilya</Option>
+                </>
+              )}
+              {category === "Giyim ve Moda" && (
+                <>
+                  <Option value="Kadın Kıyafetleri">Kadın Kıyafetleri</Option>
+                  <Option value="Erkek Kıyafetleri">Erkek Kıyafetleri</Option>
+                </>
+              )}
+              {category === "Spor ve Hobi" && (
+                <>
+                  <Option value="Spor Ekipmanları">Spor Ekipmanları</Option>
+                  <Option value="Müzik Aletleri">Müzik Aletleri</Option>
+                </>
+              )}
+              {category === "Kozmetik" && (
+                <>
+                  <Option value="Parfüm&Deodorant">Parfüm&Deodorant</Option>
+                  <Option value="Kişisel Bakım">Kişisel Bakım</Option>
+                </>
+              )}
+              {category === "Diğer" && (
+                <>
+                  <Option value="Ayakkabı">Ayakkabı</Option>
+                  <Option value="Çanta">Çanta</Option>
+                </>
+              )}
+            </Select>
+          </Form.Item>
 
           <Form.Item label="Başlık" required>
             <Input

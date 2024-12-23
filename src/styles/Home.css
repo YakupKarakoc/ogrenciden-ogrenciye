@@ -1,11 +1,14 @@
-/* Genel Sayfa Yapısı */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to bottom, #f0f9ff, #cfe9ff);
+}
+
 .home-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Tüm sayfayı kapsayacak */
-  font-family: 'Roboto', sans-serif;
-  background-color: #f0f8ff;
-  overflow: hidden; /* Kaydırma çubuğunu kaldırır */
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* Navbar */
@@ -23,13 +26,13 @@
   z-index: 10;
 }
 
-.logo-section {
+.home-logo-section {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.logo {
+.home-logo {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -37,18 +40,18 @@
   margin-right: 10px;
 }
 
-.logo-text {
+.home-logo-text {
   font-size: 1.5rem;
   font-weight: bold;
   color: white;
 }
 
-.header-buttons {
+.home-header-buttons {
   display: flex;
   gap: 10px;
 }
 
-.header-button {
+.home-header-button {
   background-color: white;
   color: #4a90e2;
   border: none;
@@ -57,26 +60,25 @@
   transition: all 0.3s ease;
 }
 
-.header-button:hover {
+.home-header-button:hover {
   background-color: #357abd;
   color: white;
   transform: scale(1.05);
 }
 
 /* Modül Kartlarının Konteyneri */
-.modules-container {
+.home-modules-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 sütun */
-  grid-template-rows: repeat(2, 1fr); /* 2 satır */
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  padding: 80px 20px 20px; /* Navbar ile boşluğu küçülttüm */
+  padding: 80px 20px 20px;
   flex-grow: 1;
-  height: calc(100vh - 80px); /* Navbar yüksekliğini çıkardım */
+  height: calc(100vh - 80px);
   box-sizing: border-box;
 }
 
 /* Modül Kartları */
-.module-card {
+.home-module-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,30 +92,30 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.module-card:hover {
+.home-module-card:hover {
   transform: scale(1.02);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-.module-image {
-  width: 100px; /* Boyutları küçültüldü */
+.home-module-image {
+  width: 100px;
   height: 100px;
   object-fit: contain;
   margin-bottom: 10px;
 }
 
-.module-title {
-  font-size: 1rem; /* Başlık boyutunu küçülttüm */
+.home-module-title {
+  font-size: 1rem;
   font-weight: bold;
   color: #4a90e2;
   margin-bottom: 5px;
 }
 
-.module-description {
+.home-module-description {
   list-style-type: disc;
   padding-left: 20px;
   color: #555;
-  font-size: 0.8rem; /* Açıklama boyutunu küçülttüm */
+  font-size: 0.8rem;
   text-align: left;
   line-height: 1.2;
   margin: 0;

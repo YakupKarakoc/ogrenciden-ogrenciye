@@ -3,7 +3,7 @@ import { Form, Input, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/AddNote.css";
+import "../../styles/lectureNotess/AddNote.css";
 
 function AddNote() {
   const navigate = useNavigate();

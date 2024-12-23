@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import "../styles/SurveyOptions.css";
+import "../../styles/houseMates/SurveyOptions.css";
 
 const { Title } = Typography;
 

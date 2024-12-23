@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Input, Button, List, message } from "antd";
 import axios from "axios";
-import "../styles/MessageChat.css";
+import "../styles/secondHandItems/MessageChat.css";
 
 const MessageChat = () => {
   const { sellerId } = useParams(); // Satıcının ID'si

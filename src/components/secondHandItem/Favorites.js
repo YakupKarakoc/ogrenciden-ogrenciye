@@ -3,9 +3,9 @@ import { Input, Button, message } from "antd";
 import { LogoutOutlined, UserOutlined, HeartFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/Favorites.css";
+import "../../styles/secondHandItems/FavoritesPage.css";
 
-function Favorites() {
+function FavoritesPage() {
     const [favorites, setFavorites] = useState([]);
     const navigate = useNavigate();
 
@@ -55,23 +55,23 @@ function Favorites() {
     };
 
     return (
-        <div className="favorites-page">
+        <div className="favorites-page-wrapper">
             {/* Header */}
-            <header className="favorites-header">
-                <div className="header-logo-section" onClick={() => navigate("/home")}>
-                    <img src="/images/logo.jpg" alt="Logo" className="logo" />
-                    <span className="header-logo-text">Öğrenciden Öğrenciye</span>
+            <header className="favorites-page-header">
+                <div className="favorites-header-logo-section" onClick={() => navigate("/home")}>
+                    <img src="/images/logo.jpg" alt="Logo" className="favorites-logo" />
+                    <span className="favorites-header-logo-text">Öğrenciden Öğrenciye</span>
                 </div>
                 <Input
-                    placeholder="Aradığınız ürün, kategori veya markayı yazınız.."
-                    className="header-search-input"
+                    placeholder="Favorilerimde ara"
+                    className="favorites-header-search-input"
                     allowClear
                 />
-                <div className="header-buttons">
+                <div className="favorites-header-buttons">
                     <Button
                         type="text"
                         icon={<UserOutlined />}
-                        className="header-button"
+                        className="favorites-header-button"
                         onClick={handleProfile}
                     >
                         Hesabım
@@ -79,7 +79,7 @@ function Favorites() {
                     <Button
                         type="text"
                         icon={<LogoutOutlined />}
-                        className="header-button"
+                        className="favorites-header-button"
                         onClick={handleLogout}
                     >
                         Çıkış
@@ -88,31 +88,31 @@ function Favorites() {
             </header>
 
             {/* Title */}
-            <h1 className="favorites-title">Favorilerim</h1>
+            <h1 className="favorites-page-title">Favorilerim</h1>
 
             {/* Favorites Grid */}
-            <div className="favorites-container">
+            <div className="favorites-grid-container">
                 {favorites.length === 0 ? (
                     <p>Henüz favori eklenmemiş.</p>
                 ) : (
                     favorites.map((fav) => (
-                        <div key={fav.favoriteId} className="favorite-card">
+                        <div key={fav.favoriteId} className="favorites-card" onClick={() => navigate(`/products/${fav.product.productId}`)} >
                             <HeartFilled
-                                className="favorite-icon active"
+                                className="favorites-card-icon active"
                                 onClick={() => removeFavorite(fav.product.productId)}
                             />
-                            <div className="favorite-image-container">
+                            <div className="favorites-card-image-container">
                                 <img
                                     src={`http://localhost:5181${fav.product.imagePath}`}
                                     alt={fav.product.title}
-                                    className="favorite-image"
+                                    className="favorites-card-image"
                                 />
                             </div>
-                            <div className="favorite-details">
-                                <h3 className="favorite-title">{fav.product.title}</h3>
-                                <p className="favorite-price">{fav.product.price} TL</p>
-                                <p className="favorite-description">{fav.product.description}</p>
-                                <p className="favorite-seller">Satıcı: {fav.product.sellerName}</p>
+                            <div className="favorites-card-details">
+                                <h3 className="favorites-card-title">{fav.product.title}</h3>
+                                <p className="favorites-card-price">{fav.product.price} TL</p>
+                                <p className="favorites-card-description">{fav.product.description}</p>
+                              
                             </div>
                         </div>
                     ))
@@ -122,4 +122,4 @@ function Favorites() {
     );
 }
 
-export default Favorites;
+export default FavoritesPage;

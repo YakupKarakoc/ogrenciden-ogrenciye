@@ -79,47 +79,50 @@ const Profile = () => {
     <div className="profile-container">
       <div className="profile-header">
         <img src="/images/logo.jpg" alt="Logo" className="profile-logo" />
-        <h2>KULLANICI BİLGİLERİ</h2>
+        <h2 className="profile-header-title">KULLANICI BİLGİLERİ</h2>
       </div>
       <div className="profile-info">
-        <label>Ad:</label>
-        <p>{profileInfo.firstName}</p>
+        <label className="profile-label">Ad:</label>
+        <p className="profile-text">{profileInfo.firstName}</p>
 
-        <label>Soyad:</label>
-        <p>{profileInfo.lastName}</p>
+        <label className="profile-label">Soyad:</label>
+        <p className="profile-text">{profileInfo.lastName}</p>
 
-        <label>E-Posta:</label>
-        <p>{profileInfo.email}</p>
+        <label className="profile-label">E-Posta:</label>
+        <p className="profile-text">{profileInfo.email}</p>
 
-        <label>Cinsiyet:</label>
-        <p>{profileInfo.gender}</p>
+        <label className="profile-label">Cinsiyet:</label>
+        <p className="profile-text">{profileInfo.gender}</p>
 
-        <label>Telefon Numarası:</label>
+        <label className="profile-label">Telefon Numarası:</label>
         {isEditing ? (
           <input
             type="tel"
             name="phoneNumber"
             value={profileInfo.phoneNumber || ''}
             onChange={handleChange}
+            className="profile-input"
           />
         ) : (
-          <p>{profileInfo.phoneNumber}</p>
+          <p className="profile-text">{profileInfo.phoneNumber}</p>
         )}
 
         {isEditing && (
           <>
-            <label>Yeni Şifre:</label>
+            <label className="profile-label">Yeni Şifre:</label>
             <input
               type="password"
               value={newPassword}
               onChange={handlePasswordChange}
+              className="profile-input"
             />
 
-            <label>Şifreyi Onayla:</label>
+            <label className="profile-label">Şifreyi Onayla:</label>
             <input
               type="password"
               value={confirmPassword}
               onChange={handleConfirmPasswordChange}
+              className="profile-input"
             />
           </>
         )}
@@ -127,11 +130,11 @@ const Profile = () => {
       <div className="profile-actions">
         {isEditing ? (
           <>
-            <button onClick={handleSave} className="save-button">Kaydet</button>
-            <button onClick={handleEditClick} className="cancel-button">İptal</button>
+            <button onClick={handleSave} className="profile-save-button">Kaydet</button>
+            <button onClick={handleEditClick} className="profile-cancel-button">İptal</button>
           </>
         ) : (
-          <button onClick={handleEditClick} className="edit-button">Düzenle</button>
+          <button onClick={handleEditClick} className="profile-edit-button">Düzenle</button>
         )}
       </div>
     </div>

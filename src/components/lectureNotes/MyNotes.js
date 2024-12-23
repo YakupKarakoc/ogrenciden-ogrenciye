@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/MyNotes.css";
+import "../../styles/lectureNotess/MyNotes.css";
 
 function MyNotes() {
   const [userNotes, setUserNotes] = useState([]);

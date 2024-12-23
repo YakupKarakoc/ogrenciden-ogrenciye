@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Slider, Form, Row, Col, message, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import "../styles/Survey.css";
+import "../../styles/houseMates/Survey.css";
 
 const { Title, Text } = Typography;
 

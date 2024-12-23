@@ -63,16 +63,16 @@ function Home() {
     <div className="home-wrapper">
       {/* Navbar */}
       <header className="home-header">
-        <div className="logo-section" onClick={() => navigate("/home")}>
-          <img src="/images/logo.jpg" alt="Logo" className="logo" />
-          <span className="logo-text">Öğrenciden Öğrenciye</span>
+        <div className="home-logo-section" onClick={() => navigate("/home")}>
+          <img src="/images/logo.jpg" alt="Logo" className="home-logo" />
+          <span className="home-logo-text">Öğrenciden Öğrenciye</span>
         </div>
-        <div className="header-buttons">
+        <div className="home-header-buttons">
           <Button
             type="default"
             icon={<UserOutlined />}
             onClick={handleProfile}
-            className="header-button"
+            className="home-header-button"
           >
             Hesabım
           </Button>
@@ -80,7 +80,7 @@ function Home() {
             type="default"
             icon={<LogoutOutlined />}
             onClick={handleLogout}
-            className="header-button"
+            className="home-header-button"
           >
             Çıkış
           </Button>
@@ -88,16 +88,16 @@ function Home() {
       </header>
 
       {/* Modül Kartları */}
-      <div className="modules-container">
+      <div className="home-modules-container">
         {modules.map((mod, index) => (
           <div
             key={index}
-            className="module-card"
+            className="home-module-card"
             onClick={() => navigate(mod.link)}
           >
-            <img src={mod.image} alt={mod.title} className="module-image" />
-            <h2 className="module-title">{mod.title}</h2>
-            <ul className="module-description">
+            <img src={mod.image} alt={mod.title} className="home-module-image" />
+            <h2 className="home-module-title">{mod.title}</h2>
+            <ul className="home-module-description">
               {mod.description.map((item, idx) => (
                 <li key={idx}>{item}</li>
               ))}

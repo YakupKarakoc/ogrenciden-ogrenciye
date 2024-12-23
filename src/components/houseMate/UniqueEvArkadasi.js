@@ -3,7 +3,7 @@ import { Input, Button, Dropdown, Menu, message, Select } from "antd";
 import { UserOutlined, LogoutOutlined, PlusCircleOutlined, HeartOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../styles/UniqueEvArkadasi.css";
+import "../../styles/houseMates/UniqueEvArkadasi.css";
 
 const { Option } = Select;
 

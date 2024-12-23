@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Input, Button, Select, message } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../styles/NewRoommateAd.css";
+import "../../styles/houseMates/NewRoommateAd.css";
 
 const { Option } = Select;
 

@@ -1,9 +1,7 @@
-/* Profile.css */
-
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  background-color: #f0f8ff; /* Üstteki renk ile aynı */
+  background: linear-gradient(to bottom, #f0f9ff, #cfe9ff);
 }
 
 .profile-container {
@@ -34,7 +32,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.profile-header h2 {
+.profile-header-title {
   font-size: 2rem;
   color: #4a90e2;
   font-weight: bold;
@@ -46,15 +44,15 @@ body {
   width: 100%;
 }
 
-.profile-info label {
+.profile-label {
   font-weight: bold;
   color: #333;
   margin-top: 15px;
   display: block;
 }
 
-.profile-info p,
-.profile-info input {
+.profile-text,
+.profile-input {
   font-size: 1rem;
   color: #666;
   width: 100%;
@@ -65,7 +63,7 @@ body {
   box-sizing: border-box;
 }
 
-.profile-info input {
+.profile-input {
   background-color: #f9f9f9;
 }
 
@@ -76,9 +74,9 @@ body {
   gap: 15px;
 }
 
-.edit-button,
-.save-button,
-.cancel-button {
+.profile-edit-button,
+.profile-save-button,
+.profile-cancel-button {
   padding: 10px 20px;
   font-size: 1rem;
   border: none;
@@ -86,23 +84,23 @@ body {
   cursor: pointer;
 }
 
-.edit-button {
+.profile-edit-button {
   background-color: #4a90e2;
   color: #ffffff;
 }
 
-.save-button {
+.profile-save-button {
   background-color: #28a745;
   color: #ffffff;
 }
 
-.cancel-button {
+.profile-cancel-button {
   background-color: #dc3545;
   color: #ffffff;
 }
 
-.edit-button:hover,
-.save-button:hover,
-.cancel-button:hover {
+.profile-edit-button:hover,
+.profile-save-button:hover,
+.profile-cancel-button:hover {
   opacity: 0.9;
 }

@@ -4,22 +4,22 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Home from './components/Home';
 import Profile from './components/Profile';
-import SecondHandItems from './components/SecondHandItems';
-import CategoryItems from "./components/CategoryItems";
-import NotPaylasim from './components/NotPaylasim';
-import NewAd from './components/NewAd';
-import UniqueEvArkadasi from './components/UniqueEvArkadasi';
-import Favorites from "./components/Favorites";
-import ProductDetail from "./components/ProductDetail";
-import DersBul from "./components/DersBul";
-import MyAds from "./components/MyAds";
-import AddNote from "./components/AddNote";
-import MyNotes from "./components/MyNotes";
-import Survey from "./components/Survey";
-import Recommendations from "./components/Recommendations";
-import SurveyOptions from "./components/SurveyOptions";
-import NewRoommateAd from './components/NewRoommateAd';
-import EvIlaniDetayi from './components/EvIlaniDetayi'; // Correct import
+import SecondHandItems from './components/secondHandItem/SecondHandItems';
+import CategoryItems from "./components/secondHandItem/CategoryItems";
+import NotPaylasim from './components/lectureNotes/NotPaylasim';
+import NewAd from './components/secondHandItem/NewAd';
+import UniqueEvArkadasi from './components/houseMate/UniqueEvArkadasi';
+import Favorites from "./components/secondHandItem/Favorites";
+import ProductDetail from "./components/secondHandItem/ProductDetail";
+import DersBul from "./components/courseAd/DersBul";
+import MyAds from "./components/secondHandItem/MyAds";
+import AddNote from "./components/lectureNotes/AddNote";
+import MyNotes from "./components/lectureNotes/MyNotes";
+import Survey from "./components/houseMate/Survey";
+import Recommendations from "./components/houseMate/Recommendations";
+import SurveyOptions from "./components/houseMate/SurveyOptions";
+import NewRoommateAd from './components/houseMate/NewRoommateAd';
+import EvIlaniDetayi from './components/houseMate/EvIlaniDetayi'; // Correct import
 
 
 function App() {
