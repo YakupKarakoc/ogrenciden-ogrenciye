@@ -158,8 +158,8 @@ body {
 .secondhand-category-card {
   position: relative;
   text-align: center;
-  padding: 5px;
-  margin: 5px;
+  padding: 10px;
+  margin: 10px;
   background: #ffffff;
   border-radius: 8px;
   transition: transform 0.3s ease;
@@ -168,6 +168,7 @@ body {
 
 .secondhand-category-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .secondhand-category-icon {
@@ -177,6 +178,7 @@ body {
 .secondhand-category-title {
   font-size: 1rem;
   font-weight: bold;
+  
 }
 
 /* Ürün Listesi */

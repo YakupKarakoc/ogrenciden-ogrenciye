@@ -8,11 +8,12 @@ import {
   LogoutOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../styles/secondHandItems/SecondHandItems.css";
 
 function SecondHandItems() {
+  const { category, subCategory } = useParams(); // useParams ile category ve subCategory alınır
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -20,11 +21,15 @@ function SecondHandItems() {
   const [hoveredCategory, setHoveredCategory] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-  const handleCategoryClick = (category, subCategory) => {
-    if (subCategory) {
-      navigate(`/category/${category}/${subCategory}`);
-    } else {
-      navigate(`/category/${category}`);
+  const fetchCategoryProducts = async () => {
+    if (!category) return; // Eğer category boşsa işlem yapmayın
+    try {
+      const response = await axios.get(
+        `http://localhost:5181/api/Products/category/${category}/${subCategory || ""}`
+      );
+      setProducts(response.data);
+    } catch (error) {
+      message.error("Kategorideki ürünler alınırken bir hata oluştu.");
     }
   };
 
@@ -53,25 +58,34 @@ function SecondHandItems() {
 
     fetchFavorites();
     fetchProducts();
-  }, []);
+    fetchCategoryProducts(); // fetchCategoryProducts çağrılır
+  }, [category, subCategory]); // category veya subCategory değiştiğinde tetiklenir
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
       message.warning("Lütfen arama yapmak için bir kelime girin.");
       return;
     }
-
     try {
       const response = await axios.get("http://localhost:5181/api/Products/Search", {
         params: { query: searchQuery },
       });
       setProducts(response.data);
+      message.success("Arama tamamlandı.");
     } catch (error) {
       if (error.response?.status === 404) {
-        message.info("Aradığınız kritere uygun ürün bulunamadı.");
+        message.info("Arama kriterine uygun bir ürün bulunamadı.");
       } else {
         message.error("Arama sırasında bir hata oluştu.");
       }
+    }
+  };
+  
+  const handleCategoryClick = (category, subCategory) => {
+    if (subCategory) {
+      navigate(`/category/${category}/${subCategory}`);
+    } else {
+      navigate(`/category/${category}`);
     }
   };
 

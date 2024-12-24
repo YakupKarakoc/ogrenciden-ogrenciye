@@ -31,6 +31,32 @@ function NoteFavoritePage() {
     fetchFavorites();
   }, [userId]);
 
+  const handleSearchFavorites = async () => {
+    if (!searchQuery.trim()) {
+      message.warning("Lütfen arama yapmak için bir kelime girin.");
+      return;
+    }
+  
+    try {
+      const response = await axios.get(
+        `http://localhost:5181/api/NoteFavorite/search/${userId}`,
+        {
+          params: { query: searchQuery },
+        }
+      );
+      setFavorites(response.data);
+      message.success("Arama tamamlandı.");
+    } catch (error) {
+      if (error.response?.status === 404) {
+        message.info("Arama kriterine uygun bir favori not bulunamadı.");
+      } else {
+        console.error("Arama sırasında bir hata oluştu:", error);
+        message.error("Arama sırasında bir hata oluştu.");
+      }
+    }
+  };
+  
+
   const handleRemoveFromFavorites = async (noteId) => {
     try {
       await axios.delete(
@@ -70,7 +96,7 @@ function NoteFavoritePage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <Button className="note-favorite-search-button" type="primary">
+          <Button className="note-favorite-search-button" onClick={handleSearchFavorites} type="primary">
             Ara
           </Button>
         </div>

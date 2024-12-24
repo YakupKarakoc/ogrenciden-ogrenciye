@@ -52,7 +52,7 @@ function UniqueEvArkadasi() {
     const accountMenu = (
         <Menu>
             <Menu.Item onClick={() => navigate("/profile")}>Kullanıcı Bilgilerim</Menu.Item>
-            <Menu.Item onClick={() => navigate("/my-ads")}>İlanlarım</Menu.Item>
+            <Menu.Item onClick={() => navigate("/")}>İlanlarım</Menu.Item>
             <Menu.Item onClick={() => navigate("/messages")}>Mesajlarım</Menu.Item>
         </Menu>
     );

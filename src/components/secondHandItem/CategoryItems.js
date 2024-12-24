@@ -34,6 +34,8 @@ function CategoryItems() {
       }
     };
 
+    
+
     const fetchFavorites = async () => {
       try {
         const userEmail = localStorage.getItem("userEmail");
@@ -47,9 +49,22 @@ function CategoryItems() {
       }
     };
 
+    const fetchCategoryProducts = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5181/api/Products/category/${category}/${subCategory || ""}`);
+        setProducts(response.data);
+      } catch (error) {
+        message.error("Kategorideki ürünler alınırken bir hata oluştu.");
+      }
+    };
+
+    fetchCategoryProducts();
     fetchFavorites();
     fetchProducts();
   }, [category, subCategory]);
+
+ 
+  
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
@@ -57,15 +72,22 @@ function CategoryItems() {
       return;
     }
     try {
-      const response = await axios.get(
-        "http://localhost:5181/api/Products/Search",
-        { params: { query: searchQuery } }
-      );
+      const response = await axios.get("http://localhost:5181/api/Products/Search", {
+        params: { query: searchQuery },
+      });
       setProducts(response.data);
+      message.success("Arama tamamlandı.");
     } catch (error) {
-      message.error("Arama sırasında bir hata oluştu.");
+      if (error.response?.status === 404) {
+        message.info("Arama kriterine uygun bir ürün bulunamadı.");
+      } else {
+        message.error("Arama sırasında bir hata oluştu.");
+      }
     }
   };
+  
+  
+  
 
   const toggleFavorite = async (productId) => {
     const userEmail = localStorage.getItem("userEmail");
@@ -115,21 +137,22 @@ function CategoryItems() {
       <header className="category-items-page-header">
         <div
           className="category-header-logo-section"
-          onClick={() => navigate("/home")}
+         
         >
           <img
             src="/images/logo.jpg"
             alt="Logo"
             className="category-logo-image"
+            onClick={() => navigate("/home")}
           />
-          <span className="category-logo-text">Öğrenciden Öğrenciye</span>
+          <span className="category-logo-text"  onClick={() => navigate("/home")}>Öğrenciden Öğrenciye</span>
           <Input
             placeholder="Aradığınız ürün, kategori veya markayı yazınız.."
             className="category-search-input"
             allowClear
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
           <Button
             type="primary"
@@ -191,11 +214,12 @@ function CategoryItems() {
               onMouseEnter={() => setShowItems(index)}
               onMouseLeave={() => setShowItems(null)}
             >
+            <div className="category-sidebar-icon">{cat.icon}</div>
               <div
                 className="category-sidebar-title"
                 onClick={() => handleCategoryClick(cat.title)}
               >
-                {cat.icon} {cat.title}
+               {cat.title}
               </div>
               {showItems === index && (
                 <ul className="category-sidebar-items">
