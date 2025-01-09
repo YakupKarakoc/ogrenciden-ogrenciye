@@ -20,7 +20,23 @@
   width: 100%;
   z-index: 10;
 }
+.favorites-header-search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.favorites-header-search-container button {
+  padding: 8px 15px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
+.favorites-header-search-container button:hover {
+  background-color: #357ab7;
+}
 .favorites-header-logo-section {
   display: flex;
   align-items: center;
@@ -42,12 +58,11 @@
 }
 
 .favorites-header-search-input {
-  width: 145px;
+  width: 200px;
   border-radius: 8px;
   padding: 8px 10px;
   border: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-right: 100px;
 }
 
 .favorites-header-buttons {

@@ -142,7 +142,7 @@ function SecondHandItems() {
     { icon: "👗", title: "Giyim ve Moda", items: ["Kadın Kıyafetleri", "Erkek Kıyafetleri"] },
     { icon: "🎮", title: "Spor ve Hobi", items: ["Spor Ekipmanları", "Müzik Aletleri"] },
     { icon: "📦", title: "Kozmetik", items: ["Parfüm&Deodorant", "Kişisel Bakım"] },
-    { icon: "📦", title: "Diğer", items: ["Ayakkabı", "Çanta"] },
+    { icon: "📦", title: "Diğer", items: ["Ayakkabı", "Çanta","Diğer Ürünler"] },
   ];
 
   return (

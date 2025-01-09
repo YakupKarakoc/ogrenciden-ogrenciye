@@ -1,21 +1,21 @@
-.recommendations-wrapper p {
-  font-size: 1.2rem;
-  margin: 20px 0;
-}
-.recommendations-wrapper p[style*="color: red"] {
-  color: red;
-  font-weight: bold;
+.recommendations-wrapper {
+  margin: 30px 10px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .recommendations-wrapper h2 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: bold;
   color: #4a90e2;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px; /* Başlığı biraz aşağı çekiyoruz */
 }
 
 .ads-container {
+  margin-top: -20px; /* İlanları biraz yukarı alıyoruz */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
@@ -50,7 +50,8 @@
   color: #666;
 }
 
-.error-message {
+.error-message,
+.no-ads-message {
   text-align: center;
   font-size: 1.2rem;
   font-weight: bold;

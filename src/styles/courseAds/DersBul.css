@@ -1,149 +1,132 @@
-/* Genel düzen */
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.dersbul-container {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to bottom, #f0f9ff, #cfe9ff);
+  min-height: 100vh;
+  padding-top: 120px; /* Header ile ilanlar arasındaki mesafeyi artırdık */
 }
 
-/* Başlık */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 8px;
-    margin-bottom: 20px;
+.dersbul-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #4a90e2, #6bc1e9);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
 }
 
-.logo-section {
-    display: flex;
-    align-items: center;
+.dersbul-header-logo-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-.logo {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
+.dersbul-logo-image {
+  width: 69px;
+  height: 69px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
-.logo-text {
-    font-size: 18px;
-    font-weight: bold;
+.dersbul-logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
 }
 
-.header-right {
-    display: flex;
+.dersbul-header-action-buttons {
+  display: flex;
+  gap: 15px;
 }
 
-.home-login-button {
-    margin-left: 10px;
-    padding: 8px 15px;
-    background-color: #0e38c5;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.dersbul-header-button {
+  font-size: 1rem;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.home-login-button:hover {
-    background-color: #d97300;
+.dersbul-header-button:hover {
+  background-color: white;
+  color: #4a90e2;
 }
 
-/* Form öğeleri */
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #555;
+.ads-container {
+  margin-top: 40px; /* İlanlar için ekstra mesafe */
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
-input,
-select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.ad-card {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 250px;
 }
 
-/* Buton */
-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: rgb(9, 234, 35);
-    font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.ad-card h3 {
+  font-size: 1.2rem;
+  color: #333;
 }
 
-button:hover {
-    background-color: #0056b3;
+.ad-card p {
+  font-size: 0.9rem;
+  color: #555;
 }
 
-/* Yazdırılan durumlar */
-ul {
-    list-style: none;
-    padding: 0;
+.no-ads-text {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
 }
 
-ul li {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #e9ecef;
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.popup-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  max-width: 90%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
 
-/* Kırmızı arka planlı yazdırılan durumlar */
-.teacher-status {
-    background-color: red;
-    color: black; /* Yazı rengini siyah yap */
+.popup-container h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #4a90e2;
+  margin-bottom: 20px;
 }
 
-/* X butonu */
-.delete-btn {
-    background-color: transparent;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
+.popup-form-row {
+  margin-bottom: 15px;
 }
 
-.delete-btn:hover {
-    color: #ffdddd;
+.popup-submit-button {
+  width: 100%;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Takvim */
-.react-calendar {
-    margin: 0 auto 15px auto;
-    border: none;
-    box-shadow: 0 4px 8px rgba(225, 100, 16, 0.1);
-    border-radius: 8px;
-}
-
-.react-calendar__tile {
-    padding: 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.react-calendar__tile--active {
-    background-color: #007bff;
-    color: black;
-}
-
-.react-calendar__tile:hover {
-    background-color: #2d048d;
-    color: greenyellow;
+.popup-submit-button:hover {
+  background-color: #357abd;
 }

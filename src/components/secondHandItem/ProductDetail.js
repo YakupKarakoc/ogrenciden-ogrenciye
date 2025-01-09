@@ -109,6 +109,9 @@ function ProductDetail() {
               <strong>Satıcı:</strong> {product.sellerName}
             </p>
             <p>
+            <strong>İletişim:</strong> {product.sellerPhone || "Numara mevcut değil"}
+          </p>
+            <p>
               <strong>Yayınlanma Tarihi:</strong>{" "}
               {new Date(product.createdAt).toLocaleDateString()}
             </p>

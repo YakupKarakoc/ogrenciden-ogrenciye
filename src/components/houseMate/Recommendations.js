@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, message } from "antd";
+import { useNavigate } from "react-router-dom";
 import "../../styles/houseMates/recommendations.css";
 
 const { Meta } = Card;
@@ -7,7 +8,8 @@ const { Meta } = Card;
 function Recommendations({ userId }) {
   const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); // Hata durumunu kontrol etmek için
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`/api/RoommateAds/Recommended?userId=${userId}`)
@@ -19,7 +21,7 @@ function Recommendations({ userId }) {
       })
       .then((data) => {
         if (data.success === false && data.message) {
-          setError(data.message); // Backend'den gelen hata mesajını sakla
+          setError(data.message);
         } else if (Array.isArray(data)) {
           setAds(data);
         }
@@ -39,9 +41,7 @@ function Recommendations({ userId }) {
     return (
       <div className="recommendations-wrapper">
         <h2>Önerilen İlanlar</h2>
-        <p style={{ color: "red", textAlign: "center", fontWeight: "bold" }}>
-          {error}
-        </p>
+        <p className="error-message">{error}</p>
       </div>
     );
   }
@@ -50,7 +50,7 @@ function Recommendations({ userId }) {
     return (
       <div className="recommendations-wrapper">
         <h2>Önerilen İlanlar</h2>
-        <p style={{ textAlign: "center" }}>Önerilen ilan bulunamadı.</p>
+        <p className="no-ads-message">Önerilen ilan bulunamadı.</p>
       </div>
     );
   }
@@ -69,6 +69,7 @@ function Recommendations({ userId }) {
                 src={ad.imagePath || "/images/default.jpg"}
               />
             }
+            onClick={() => navigate(`/roommatead/${ad.adId}`)}
           >
             <Meta
               title={ad.title}

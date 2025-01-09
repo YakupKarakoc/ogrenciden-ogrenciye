@@ -51,11 +51,7 @@ function MyAds() {
         <div className="product-header-logo-section" onClick={() => navigate("/home")}>
           <img src="/images/logo.jpg" alt="Logo" className="product-logo" />
           <span className="product-header-logo-text">Öğrenciden Öğrenciye</span>
-          <Input
-            placeholder="İlanlarımda ara"
-            className="product-header-search-input"
-            allowClear
-          />
+          
         </div>
         <div className="product-header-buttons">
           <Button

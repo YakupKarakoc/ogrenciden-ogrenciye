@@ -25,6 +25,11 @@ function Signup() {
       return;
     }
 
+    if (password.length < 7) {
+      message.error("Şifre en az 7 karakter uzunluğunda olmalıdır!");
+      return;
+    }
+
     if (password !== confirmPassword) {
       message.error("Şifreler eşleşmiyor!");
       return;
@@ -32,6 +37,16 @@ function Signup() {
 
     if (!email.endsWith(".edu.tr")) {
       message.error("Lütfen geçerli bir .edu.tr uzantılı e-posta adresi girin!");
+      return;
+    }
+
+    if (phone.length < 10) {
+      message.error("Telefon numarası 10 haneli olmalıdır!");
+      return;
+    }
+
+    if (!phone.startsWith("5")) {
+      message.error("Telefon numarası 5 ile başlamalıdır!");
       return;
     }
 
@@ -62,14 +77,20 @@ function Signup() {
     }
   };
 
-  const isFormValid = email && firstName && lastName && phone && password && confirmPassword && gender;
+  const isFormValid =
+    email &&
+    firstName &&
+    lastName &&
+    phone &&
+    password &&
+    confirmPassword &&
+    gender;
 
   const handlePhoneChange = (e) => {
     let input = e.target.value;
 
-    if (input.length === 1 && input !== "5") {
+    if (!input.startsWith("5")) {
       message.error("Telefon numarası 5 ile başlamalıdır!");
-      return;
     }
 
     input = input.replace(/\D/g, "").substring(0, 10);
@@ -102,7 +123,11 @@ function Signup() {
         </div>
         <Form layout="vertical" onFinish={handleSignup}>
           <div className="signup-form-row">
-            <Form.Item label={<span className="signup-bold-label">Ad</span>} required className="signup-form-item">
+            <Form.Item
+              label={<span className="signup-bold-label">Ad</span>}
+              required
+              className="signup-form-item"
+            >
               <Input
                 value={firstName}
                 onChange={(e) => handleNameChange(setFirstName, e.target.value)}
@@ -110,7 +135,11 @@ function Signup() {
                 className="signup-input-field"
               />
             </Form.Item>
-            <Form.Item label={<span className="signup-bold-label">Soyad</span>} required className="signup-form-item">
+            <Form.Item
+              label={<span className="signup-bold-label">Soyad</span>}
+              required
+              className="signup-form-item"
+            >
               <Input
                 value={lastName}
                 onChange={(e) => handleNameChange(setLastName, e.target.value)}
@@ -120,7 +149,11 @@ function Signup() {
             </Form.Item>
           </div>
           <div className="signup-form-row">
-            <Form.Item label={<span className="signup-bold-label">E-posta</span>} required className="signup-form-item">
+            <Form.Item
+              label={<span className="signup-bold-label">E-posta</span>}
+              required
+              className="signup-form-item"
+            >
               <Input
                 type="email"
                 value={email}
@@ -129,7 +162,11 @@ function Signup() {
                 className="signup-input-field"
               />
             </Form.Item>
-            <Form.Item label={<span className="signup-bold-label">Telefon</span>} required className="signup-form-item">
+            <Form.Item
+              label={<span className="signup-bold-label">Telefon</span>}
+              required
+              className="signup-form-item"
+            >
               <Input
                 value={phone}
                 onChange={handlePhoneChange}
@@ -139,7 +176,11 @@ function Signup() {
             </Form.Item>
           </div>
           <div className="signup-form-row">
-            <Form.Item label={<span className="signup-bold-label">Şifre</span>} required className="signup-form-item">
+            <Form.Item
+              label={<span className="signup-bold-label">Şifre</span>}
+              required
+              className="signup-form-item"
+            >
               <Input.Password
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -147,7 +188,11 @@ function Signup() {
                 className="signup-input-field"
               />
             </Form.Item>
-            <Form.Item label={<span className="signup-bold-label">Şifre Doğrulama</span>} required className="signup-form-item">
+            <Form.Item
+              label={<span className="signup-bold-label">Şifre Doğrulama</span>}
+              required
+              className="signup-form-item"
+            >
               <Input.Password
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -156,15 +201,28 @@ function Signup() {
               />
             </Form.Item>
           </div>
-          <Form.Item label={<span className="signup-bold-label">Cinsiyet</span>} required className="signup-form-item">
-            <Radio.Group onChange={(e) => setGender(e.target.value)} value={gender} className="signup-radio-group">
+          <Form.Item
+            label={<span className="signup-bold-label">Cinsiyet</span>}
+            required
+            className="signup-form-item"
+          >
+            <Radio.Group
+              onChange={(e) => setGender(e.target.value)}
+              value={gender}
+              className="signup-radio-group"
+            >
               <Radio value="Erkek">Erkek</Radio>
               <Radio value="Kadın">Kadın</Radio>
               <Radio value="Diğer">Belirtmek istemiyorum</Radio>
             </Radio.Group>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="signup-button" disabled={!isFormValid}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="signup-button"
+              disabled={!isFormValid}
+            >
               Kayıt Ol
             </Button>
           </Form.Item>

@@ -6,7 +6,10 @@ import "../../styles/houseMates/Survey.css";
 const { Title, Text } = Typography;
 
 function Survey({ userId }) {
-  const [answers, setAnswers] = useState({
+  const navigate = useNavigate();
+
+  // Varsayılan state
+  const defaultAnswers = {
     question1: 3,
     question2: 3,
     question3: 3,
@@ -17,40 +20,47 @@ function Survey({ userId }) {
     question8: 3,
     question9: 3,
     question10: 3,
-  });
+  };
 
-  const navigate = useNavigate();
+  const [answers, setAnswers] = useState(defaultAnswers);
+  const [isLoading, setIsLoading] = useState(true); // Yükleme durumu
 
   useEffect(() => {
-    // Varsayılan değerleri koruyarak kullanıcı verilerini yükle
-    fetch(`/api/usersurvey/${userId}`)
-      .then((res) => {
-        if (!res.ok) {
+    const fetchSurveyData = async () => {
+      try {
+        const response = await fetch(`/api/usersurvey/${userId}`);
+        if (!response.ok) {
           throw new Error("Anket verileri alınamadı.");
         }
-        return res.json();
-      })
-      .then((data) => {
-        if (data) {
-          setAnswers((prevAnswers) => ({
-            ...prevAnswers,
-            question1: data.question1 ?? 3,
-            question2: data.question2 ?? 3,
-            question3: data.question3 ?? 3,
-            question4: data.question4 ?? 3,
-            question5: data.question5 ?? 3,
-            question6: data.question6 ?? 3,
-            question7: data.question7 ?? 3,
-            question8: data.question8 ?? 3,
-            question9: data.question9 ?? 3,
-            question10: data.question10 ?? 3,
-          }));
-        }
-      })
-      .catch((error) => {
+        const data = await response.json();
+  
+        // Gelen verileri state'e aktar
+        setAnswers({
+          question1: data.question1 ?? 3,
+          question2: data.question2 ?? 3,
+          question3: data.question3 ?? 3,
+          question4: data.question4 ?? 3,
+          question5: data.question5 ?? 3,
+          question6: data.question6 ?? 3,
+          question7: data.question7 ?? 3,
+          question8: data.question8 ?? 3,
+          question9: data.question9 ?? 3,
+          question10: data.question10 ?? 3,
+        });
+      } catch (error) {
         console.error("Anket yükleme hatası:", error);
-        message.error("Anket yüklenirken bir hata oluştu. Varsayılan değerler korundu.");
-      });
+        message.error("Anket yüklenirken bir hata oluştu. Varsayılan değerler kullanılacak.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    // Yeni bir kullanıcı için state sıfırlama ve veri çekme
+    if (userId) {
+      setAnswers(defaultAnswers);
+      setIsLoading(true);
+      fetchSurveyData();
+    }
   }, [userId]);
   
 
@@ -66,7 +76,7 @@ function Survey({ userId }) {
     })
       .then((res) => {
         if (res.ok) {
-          return res.text(); // Yanıtı düz metin olarak işle
+          return res.text();
         }
         throw new Error("Sunucu hatası meydana geldi.");
       })
@@ -79,9 +89,14 @@ function Survey({ userId }) {
         message.error("Bir hata oluştu. Lütfen tekrar deneyin.");
       });
   };
-  
-  
-  
+
+  if (isLoading) {
+    return (
+      <div className="loading-container">
+        <p>Anket verileri yükleniyor...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="survey-wrapper">

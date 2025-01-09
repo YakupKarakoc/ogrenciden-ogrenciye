@@ -6,6 +6,7 @@ import {
   PlusCircleOutlined,
   HeartFilled,
   HeartOutlined,
+  SnippetsOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -116,6 +117,7 @@ function NotPaylasim() {
           </Button>
         </div>
         <div className="header-right-unique">
+       
           <Button
             type="text"
             icon={<PlusCircleOutlined />}
@@ -124,6 +126,14 @@ function NotPaylasim() {
           >
             Not Ekle
           </Button>
+          <Button
+          type="text"
+          icon={<SnippetsOutlined  />}
+          className="header-button-unique"
+          onClick={() => navigate("/my-notes")}
+        >
+          Notlarım
+        </Button>
           <Button
             type="text"
             icon={<HeartFilled />}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Input, Button, Dropdown, Menu, message, Select } from "antd";
-import { UserOutlined, LogoutOutlined, PlusCircleOutlined, HeartOutlined } from "@ant-design/icons";
+import { Input, Button, message, Select } from "antd";
+import { UserOutlined, LogoutOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../styles/houseMates/UniqueEvArkadasi.css";
@@ -28,34 +28,32 @@ function UniqueEvArkadasi() {
         };
         fetchAds();
     }, []);
-    const applyFilters = async () => {
-      try {
-          const params = {};
-  
-          // Yalnızca doldurulan filtreleri ekle
-          if (filters.city) params.city = filters.city;
-          if (filters.roomCount) params.roomCount = filters.roomCount;
-          if (filters.minPrice) params.minPrice = filters.minPrice;
-          if (filters.maxPrice) params.maxPrice = filters.maxPrice;
-  
-          // API isteği
-          const response = await axios.get("http://localhost:5181/api/RoommateAds/Search", { params });
-          setAds(response.data);
-      } catch (error) {
-          message.error("Filtreleme sırasında bir hata oluştu!");
-      }
-  };
-  
-  
-  
 
-    const accountMenu = (
-        <Menu>
-            <Menu.Item onClick={() => navigate("/profile")}>Kullanıcı Bilgilerim</Menu.Item>
-            <Menu.Item onClick={() => navigate("/")}>İlanlarım</Menu.Item>
-            <Menu.Item onClick={() => navigate("/messages")}>Mesajlarım</Menu.Item>
-        </Menu>
-    );
+    const applyFilters = async () => {
+        try {
+            const params = {};
+
+            // Yalnızca doldurulan filtreleri ekle
+            if (filters.city) params.city = filters.city;
+            if (filters.roomCount) params.roomCount = filters.roomCount;
+            if (filters.minPrice) params.minPrice = filters.minPrice;
+            if (filters.maxPrice) params.maxPrice = filters.maxPrice;
+
+            // API isteği
+            const response = await axios.get("http://localhost:5181/api/RoommateAds/Search", { params });
+            setAds(response.data);
+        } catch (error) {
+            message.error("Filtreleme sırasında bir hata oluştu!");
+        }
+    };
+
+    const handleCityChange = (e) => {
+        const value = e.target.value;
+        // Harf kontrolü: Sadece harflerin kabul edilmesini sağlar
+        if (/^[a-zA-ZığüşöçİĞÜŞÖÇ\s]*$/.test(value) || value === "") {
+            setFilters({ ...filters, city: value });
+        }
+    };
 
     return (
         <div className="unique-evarkadasi-wrapper">
@@ -74,22 +72,13 @@ function UniqueEvArkadasi() {
                     >
                         İlan Ver
                     </Button>
-                    <Dropdown overlay={accountMenu} placement="bottomCenter" arrow>
-                        <Button
-                            type="text"
-                            className="unique-header-button"
-                            icon={<UserOutlined />}
-                        >
-                            Hesabım
-                        </Button>
-                    </Dropdown>
                     <Button
                         type="text"
                         className="unique-header-button"
-                        icon={<HeartOutlined />}
-                        onClick={() => navigate("/favorites")}
+                        icon={<UserOutlined />}
+                        onClick={() => navigate("/profile")} // Hesabım butonuna tıklanıldığında profile yönlendir
                     >
-                        Favorilerim
+                        Hesabım
                     </Button>
                     <Button
                         type="text"
@@ -109,40 +98,39 @@ function UniqueEvArkadasi() {
             <div className="unique-evarkadasi-content">
                 {/* Filters Section */}
                 <aside className="filter-section">
-    <h3>Filtrele</h3>
-    <Input
-        placeholder="Şehir"
-        value={filters.city}
-        onChange={(e) => setFilters({ ...filters, city: e.target.value })}
-    />
-    <Select
-        placeholder="Oda Sayısı"
-        value={filters.roomCount || undefined}
-        onChange={(value) => setFilters({ ...filters, roomCount: value })}
-        style={{ width: "100%", marginBottom: "10px" }}
-    >
-        <Option value="1+1">1+1</Option>
-        <Option value="2+1">2+1</Option>
-        <Option value="3+1">3+1</Option>
-        <Option value="4+1">4+1</Option>
-    </Select>
-    <Input
-        type="number"
-        placeholder="Min Fiyat"
-        value={filters.minPrice}
-        onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
-    />
-    <Input
-        type="number"
-        placeholder="Max Fiyat"
-        value={filters.maxPrice}
-        onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })}
-    />
-    <Button type="primary" onClick={applyFilters}>
-        Filtrele
-    </Button>
-</aside>
-
+                    <h3>Filtrele</h3>
+                    <Input
+                        placeholder="Şehir"
+                        value={filters.city}
+                        onChange={handleCityChange} // Şehir girişine harf kontrolü eklendi
+                    />
+                    <Select
+                        placeholder="Oda Sayısı"
+                        value={filters.roomCount || undefined}
+                        onChange={(value) => setFilters({ ...filters, roomCount: value })}
+                        style={{ width: "100%", marginBottom: "10px" }}
+                    >
+                        <Option value="1+1">1+1</Option>
+                        <Option value="2+1">2+1</Option>
+                        <Option value="3+1">3+1</Option>
+                        <Option value="4+1">4+1</Option>
+                    </Select>
+                    <Input
+                        type="number"
+                        placeholder="Min Fiyat"
+                        value={filters.minPrice}
+                        onChange={(e) => setFilters({ ...filters, minPrice: e.target.value })}
+                    />
+                    <Input
+                        type="number"
+                        placeholder="Max Fiyat"
+                        value={filters.maxPrice}
+                        onChange={(e) => setFilters({ ...filters, maxPrice: e.target.value })}
+                    />
+                    <Button type="primary" onClick={applyFilters}>
+                        Filtrele
+                    </Button>
+                </aside>
 
                 {/* Ads Section */}
                 <main className="ads-section">

@@ -7,27 +7,35 @@ import "../../styles/secondHandItems/FavoritesPage.css";
 
 function FavoritesPage() {
     const [favorites, setFavorites] = useState([]);
+    const [searchQuery, setSearchQuery] = useState(""); // Arama sorgusu
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchFavorites = async () => {
-            try {
-                const userEmail = localStorage.getItem("userEmail");
-                if (!userEmail) {
-                    throw new Error("Kullanıcı e-posta adresi bulunamadı.");
-                }
-
-                const response = await axios.get(`http://localhost:5181/api/ProductFavorite`, {
-                    params: { userEmail },
-                });
-                setFavorites(response.data);
-            } catch (error) {
-                message.error("Favoriler alınırken bir hata oluştu!");
-            }
-        };
-
         fetchFavorites();
     }, []);
+
+    const fetchFavorites = async (query = "") => {
+        try {
+            const userEmail = localStorage.getItem("userEmail");
+            if (!userEmail) {
+                throw new Error("Kullanıcı e-posta adresi bulunamadı.");
+            }
+
+            const response = await axios.get(`http://localhost:5181/api/ProductFavorite`, {
+                params: { userEmail, query }, // Arama sorgusu parametre olarak gönderiliyor
+            });
+
+            if (response.data.length === 0 && query) {
+                message.warning("Bu ürün favorilerinizde yok. Tüm favoriler gösteriliyor.");
+                fetchFavorites(); // Tüm favorileri yeniden yükle
+                return;
+            }
+
+            setFavorites(response.data);
+        } catch (error) {
+            message.error("Favoriler alınırken bir hata oluştu!");
+        }
+    };
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -36,6 +44,10 @@ function FavoritesPage() {
 
     const handleProfile = () => {
         navigate("/profile");
+    };
+
+    const handleSearch = () => {
+        fetchFavorites(searchQuery); // Arama butonuna basıldığında favoriler güncellenir
     };
 
     const removeFavorite = async (productId) => {
@@ -62,11 +74,18 @@ function FavoritesPage() {
                     <img src="/images/logo.jpg" alt="Logo" className="favorites-logo" />
                     <span className="favorites-header-logo-text">Öğrenciden Öğrenciye</span>
                 </div>
-                <Input
-                    placeholder="Favorilerimde ara"
-                    className="favorites-header-search-input"
-                    allowClear
-                />
+                <div className="favorites-header-search-container">
+                    <Input
+                        placeholder="Favorilerimde ara"
+                        className="favorites-header-search-input"
+                        allowClear
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                    <Button type="primary" onClick={handleSearch}>
+                        Ara
+                    </Button>
+                </div>
                 <div className="favorites-header-buttons">
                     <Button
                         type="text"
@@ -96,7 +115,7 @@ function FavoritesPage() {
                     <p>Henüz favori eklenmemiş.</p>
                 ) : (
                     favorites.map((fav) => (
-                        <div key={fav.favoriteId} className="favorites-card" onClick={() => navigate(`/products/${fav.product.productId}`)} >
+                        <div key={fav.favoriteId} className="favorites-card" onClick={() => navigate(`/products/${fav.product.productId}`)}>
                             <HeartFilled
                                 className="favorites-card-icon active"
                                 onClick={() => removeFavorite(fav.product.productId)}
@@ -112,7 +131,6 @@ function FavoritesPage() {
                                 <h3 className="favorites-card-title">{fav.product.title}</h3>
                                 <p className="favorites-card-price">{fav.product.price} TL</p>
                                 <p className="favorites-card-description">{fav.product.description}</p>
-                              
                             </div>
                         </div>
                     ))

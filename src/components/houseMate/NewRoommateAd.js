@@ -32,7 +32,22 @@ function NewRoommateAd() {
     };
 
     const handleFileChange = (e) => {
-        setForm({ ...form, image: e.target.files[0] });
+        const selectedFile = e.target.files[0];
+
+        if (!selectedFile) {
+            setForm({ ...form, image: null });
+            return;
+        }
+
+        // Yalnızca JPG ve PNG dosyalarına izin ver
+        const allowedTypes = ["image/jpeg", "image/png"];
+        if (!allowedTypes.includes(selectedFile.type)) {
+            message.error("Yalnızca JPG ve PNG formatındaki dosyalar yüklenebilir!");
+            setForm({ ...form, image: null });
+            return;
+        }
+
+        setForm({ ...form, image: selectedFile });
     };
 
     const handleSubmit = async () => {

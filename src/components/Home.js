@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "antd";
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -59,6 +59,23 @@ function Home() {
     navigate("/profile");
   };
 
+  const handleModuleClick = (link) => {
+    if (link === "/survey") {
+      // Ev Arkadaşı Bulma'ya tıklanınca sayfayı yenile ve sonra modüle git
+      sessionStorage.setItem("homeReloaded", "true");
+      window.location.href = link; // Hem yenile hem de modüle git
+    } else {
+      navigate(link); // Diğer modüller için doğrudan yönlendirme
+    }
+  };
+
+  useEffect(() => {
+    const homeReloaded = sessionStorage.getItem("homeReloaded");
+    if (homeReloaded === "true") {
+      sessionStorage.removeItem("homeReloaded");
+    }
+  }, []);
+
   return (
     <div className="home-wrapper">
       {/* Navbar */}
@@ -93,7 +110,7 @@ function Home() {
           <div
             key={index}
             className="home-module-card"
-            onClick={() => navigate(mod.link)}
+            onClick={() => handleModuleClick(mod.link)}
           >
             <img src={mod.image} alt={mod.title} className="home-module-image" />
             <h2 className="home-module-title">{mod.title}</h2>

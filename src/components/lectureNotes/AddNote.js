@@ -14,16 +14,22 @@ function AddNote() {
 
   // Form gönderimi
   const handleFormSubmit = async (values) => {
+    if (!file) {
+      message.error("Lütfen bir dosya yükleyin!");
+      return;
+    }
+
+    // PDF olup olmadığını kontrol et
+    if (file.type !== "application/pdf") {
+      message.error("Yalnızca PDF dosyası yükleyebilirsiniz!");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("UploaderId", uploaderId);
     formData.append("Subject", values.courseName);
     formData.append("Content", values.description);
-    if (file) {
-      formData.append("File", file);
-    } else {
-      message.error("Lütfen bir dosya yükleyin!");
-      return;
-    }
+    formData.append("File", file);
 
     try {
       const response = await axios.post("http://localhost:5181/api/Note", formData, {
@@ -45,7 +51,15 @@ function AddNote() {
   // Dosya yükleme işlemi
   const handleFileChange = (info) => {
     if (info.fileList.length > 0) {
-      setFile(info.fileList[0].originFileObj);
+      const selectedFile = info.fileList[0].originFileObj;
+
+      // PDF olup olmadığını kontrol et
+      if (selectedFile.type === "application/pdf") {
+        setFile(selectedFile);
+      } else {
+        message.error("Yalnızca PDF dosyası yükleyebilirsiniz!");
+        setFile(null);
+      }
     } else {
       setFile(null);
     }

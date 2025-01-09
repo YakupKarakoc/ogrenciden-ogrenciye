@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Spin, message } from "antd";
-
+import { Spin, message, Button } from "antd";
+import "../../styles/houseMates/EvIlaniDetayi.css";
 
 function EvIlaniDetayi() {
-    const { id } = useParams(); // Get the ID from the route
+    const { id } = useParams(); // Rotadan id'yi al
+    const navigate = useNavigate();
     const [ad, setAd] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -25,7 +26,11 @@ function EvIlaniDetayi() {
     }, [id]);
 
     if (loading) {
-        return <Spin tip="Yükleniyor..." />;
+        return (
+            <div className="loading-container">
+                <Spin tip="Yükleniyor..." />
+            </div>
+        );
     }
 
     if (!ad) {
@@ -33,19 +38,52 @@ function EvIlaniDetayi() {
     }
 
     return (
-        <div className="evilani-detayi-wrapper">
-            <h1>{ad.title}</h1>
-            <div className="ad-details">
-                <img src={ad.imagePath || "/images/default.jpg"} alt="Ev Resmi" className="ad-image" />
-                <div className="ad-info">
-                    <p><strong>Açıklama:</strong> {ad.description}</p>
-                    <p><strong>Şehir / İlçe:</strong> {ad.city}, {ad.district}</p>
-                    <p><strong>Oda Sayısı:</strong> {ad.roomCount}</p>
-                    <p><strong>Metrekare:</strong> {ad.squareMeters} m²</p>
-                    <p><strong>Fiyat:</strong> {ad.rentPrice} TL</p>
-                    <p><strong>Cinsiyet Tercihi:</strong> {ad.genderPreference}</p>
+        <div className="ev-ilani-detayi-wrapper">
+            <header className="detail-header">
+                <h1>{ad.title}</h1>
+                <Button onClick={() => navigate("/uniqueevarkadasi")}>Geri Dön</Button>
+            </header>
+            <div className="detail-content">
+                <img
+                    src={ad.imagePath || "/images/default.jpg"}
+                    alt="Ev Resmi"
+                    className="detail-image"
+                />
+                <div className="detail-info">
+                    <p>
+                        <strong>İlan Sahibi:</strong> {ad.uploaderName}
+                    </p>
+                    <p>
+                        <strong>İletişim:</strong> {ad.uploaderPhone}
+                    </p>
+                    <p>
+                        <strong>Açıklama:</strong> {ad.description}
+                    </p>
+                    <p>
+                        <strong>Şehir / İlçe:</strong> {ad.city}, {ad.district}
+                    </p>
+                    <p>
+                        <strong>Oda Sayısı:</strong> {ad.roomCount}
+                    </p>
+                    <p>
+                        <strong>Metrekare:</strong> {ad.squareMeters} m²
+                    </p>
+                    <p>
+                        <strong>Fiyat:</strong> {ad.rentPrice} TL
+                    </p>
+                    <p>
+                        <strong>Cinsiyet Tercihi:</strong> {ad.genderPreference}
+                    </p>
                 </div>
             </div>
+            <footer className="detail-footer">
+                <Button
+                    type="primary"
+                    onClick={() => navigate(`/messages/${ad.adId}`)}
+                >
+                    Ev Sahibine Ulaş
+                </Button>
+            </footer>
         </div>
     );
 }

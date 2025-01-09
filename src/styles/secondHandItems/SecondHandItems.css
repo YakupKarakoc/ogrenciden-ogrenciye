@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   background: linear-gradient(to bottom, #f0f9ff, #cfe9ff);
+  min-height: 100vh;
 }
 
 /* Genel Sayfa Stilleri */
@@ -9,6 +10,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: linear-gradient(to bottom, #f0f9ff, #cfe9ff);
 }
 
 /* Header */
@@ -33,8 +35,8 @@ body {
 }
 
 .secondhand-logo {
-  width: 69px;
-  height: 69px;
+  width: 61px;
+  height: 61px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -128,11 +130,11 @@ body {
 /* Sidebar */
 .secondhand-sidebar {
   position: fixed;
-  top: 99px;
+  top: 91px;
   left: 0;
   width: 200px;
-  background-color: #f8f8fc;
-  height: calc(100vh - 80px);
+  background:transparent;
+  height: calc(100vh - 91px);
   padding-top: 10px;
   z-index: 10;
 }
@@ -148,6 +150,17 @@ body {
   border-radius: 8px;
   padding: 10px;
   z-index: 100;
+}
+
+.secondhand-category-dropdown li{
+  list-style: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.secondhand-category-dropdown li:hover{
+  background-color: #4a90e2;
 }
 
 .secondhand-category-card:hover .secondhand-category-dropdown {
@@ -189,6 +202,7 @@ body {
   display: grid;
   grid-template-columns: repeat(6,1fr);
   gap: 15px;
+  background: transparent;
  
 }
 

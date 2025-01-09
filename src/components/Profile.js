@@ -34,7 +34,19 @@ const Profile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfileInfo({ ...profileInfo, [name]: value });
+    if (name === 'phoneNumber') {
+      let input = value.replace(/\D/g, '').substring(0, 10);
+      if (input.length >= 7) {
+        input = input.replace(/^(\d{3})(\d{3})(\d{2})(\d{2})$/, "$1-$2-$3-$4");
+      } else if (input.length >= 4) {
+        input = input.replace(/^(\d{3})(\d{3})$/, "$1-$2");
+      } else if (input.length >= 3) {
+        input = input.replace(/^(\d{3})$/, "$1-");
+      }
+      setProfileInfo({ ...profileInfo, [name]: input });
+    } else {
+      setProfileInfo({ ...profileInfo, [name]: value });
+    }
   };
 
   const handlePasswordChange = (e) => {
@@ -51,10 +63,16 @@ const Profile = () => {
       return;
     }
 
+    if (newPassword && newPassword.length < 7) {
+      message.error('Yeni şifre en az 7 karakter uzunluğunda olmalıdır.');
+      return;
+    }
+
     if (newPassword && newPassword !== confirmPassword) {
       message.error('Şifreler eşleşmiyor. Lütfen kontrol edin.');
       return;
     }
+
     axios.put('http://localhost:5181/api/Auth/profile/update', {
       email: profileInfo.email,       // Zorunlu
       phoneNumber: profileInfo.phoneNumber || null, // Opsiyonel
@@ -72,7 +90,6 @@ const Profile = () => {
         console.error(error);
         message.error('Profil güncelleme sırasında bir hata oluştu.');
       });
-    
   };
 
   return (

@@ -63,7 +63,7 @@ function NewAd() {
       if (error.response?.data?.message) {
         message.error(error.response.data.message);
       } else {
-        message.error("Bir hata oluştu. Lütfen tekrar deneyin.");
+        message.error("Lütfen bütün alanları eksiksiz giriniz.");
       }
     }
   };
@@ -151,6 +151,7 @@ function NewAd() {
                 <>
                   <Option value="Ayakkabı">Ayakkabı</Option>
                   <Option value="Çanta">Çanta</Option>
+                  <Option value="Diğer Ürünler">Diğer Ürünler</Option>
                 </>
               )}
             </Select>
