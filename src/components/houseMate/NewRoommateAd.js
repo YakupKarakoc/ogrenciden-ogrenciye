@@ -24,6 +24,15 @@ function NewRoommateAd() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+
+        // Metrekare ve kira için negatif değer kontrolü
+        if (name === "squareMeters" || name === "rentPrice") {
+            if (value < 0) {
+                message.error("Lütfen pozitif bir değer girin.");
+                return;
+            }
+        }
+
         setForm({ ...form, [name]: value });
     };
 
